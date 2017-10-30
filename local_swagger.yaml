@@ -1,0 +1,1465 @@
+swagger: '2.0'
+info:
+  title: SUPERSEDE ReleasePlanner API to UI
+  description: This API defines the operations that the Replan Controller component exposes to the Replan Dashboard (UI) component.
+  version: "2.0.0"
+# the domain of the service
+host: replan-project-carlesf.c9users.io
+#release-planner-ui-api.herokuapp.com
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /api/ui/v1
+produces:
+  - application/json
+paths:
+  /projects:
+    get:
+      summary: Get projects
+      description: |
+        This operation retrieves a list of projects.
+      operationId: getProjects
+      tags:
+        - New in v.2
+        - Projects
+      responses:
+        200:
+          description: An array of projects
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Project'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project not found
+    post:
+      summary: Create a new Project
+      description: |
+        This operation allows defining a new Project.
+      operationId: createProject
+      parameters:
+        - name: body
+          in: body
+          description: Project parameters
+          required: true
+          schema:
+            $ref: '#/definitions/NewProjectData'
+      tags:
+        - New in v.2
+        - Projects
+      responses:
+        200:
+          description: A new Project
+          schema:
+            $ref: '#/definitions/Project'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project not found
+  /projects/{projectId}:
+    get:
+      summary: Get Project info
+      description: |
+        This operation returns the main info for a given Project: name, resources, effort unit, etc.
+      operationId: getProject
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+      tags:
+        - Projects
+      responses:
+        200:
+          description: Project info
+          schema:
+            $ref: '#/definitions/Project'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project not found
+    put:
+      summary: Modify Project
+      description: |
+        This operation allows modyfing some parameters of a given Project: effort unit, number of hours per effor unit and number of hours per week for a full time resource.
+      operationId: modifyProject 
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: body
+          in: body
+          description: Project's parameters that can be modified
+          required: true
+          schema:
+            $ref: '#/definitions/ProjectData'
+      tags:
+        - Projects
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Project'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project not found
+    delete:
+      summary: Remove a given Project
+      description: |
+        This operation allows removing a given Project.
+      operationId: deleteProject 
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+      tags:
+        - Projects
+        - New in v.2
+      responses:
+        200:
+          description: Success
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project not found
+  /projects/{projectId}/features:
+    get:
+      summary: Get features
+      description: |
+        This operation returns a list of Features for a given Project. This list can be filtered by Feature status: pending or scheduled.
+      operationId: getFeatures
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: status
+          in: query
+          description: any | pending | scheduled
+          required: false
+          type: string
+          enum:
+             - any
+             - pending
+             - scheduled
+      tags:
+        - Features
+      responses:
+        200:
+          description: An array of features
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Feature'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project not found
+  /projects/{projectId}/features/create_one:
+    post:
+      summary: Create a new Feature
+      description: |
+        This operation allows defining a new Feature for a given Project.
+      operationId: createFeature
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: body
+          in: body
+          description: Project parameters
+          required: true
+          schema:
+            $ref: '#/definitions/NewFeatureData'
+      tags:
+        - Features
+        - New in v.2
+      responses:
+        200:
+          description: A new Feature
+          schema:
+            $ref: '#/definitions/Feature'
+        400:
+          description: Already exists feature with that 'code'
+          schema:
+            $ref: '#/definitions/Error'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project not found
+  /projects/{projectId}/features/{featureId}:
+    get:
+      summary: Get a feature given its ID
+      description: |
+        This operation returns the main info of a Feature given its featureID.
+      operationId: getFeature
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: featureId
+          in: path
+          type: number
+          format: int64
+          description: ID of the feature
+          required: true
+      tags:
+        - Features
+      responses:
+        200:
+          description: An array of features
+          schema:
+            $ref: '#/definitions/Feature'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Feature not found
+    put:
+      summary: Modifies a given feature
+      description: |
+        This operation allows modifying some parameters of a given Feature: name, description, effort, deadline and priority.
+      operationId: modifyFeature
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: featureId
+          in: path
+          type: number
+          format: int64
+          description: ID of the feature
+          required: true
+        - name: body
+          in: body
+          description: Feature parameters that can be modified
+          required: true
+          schema:
+            $ref: '#/definitions/FeatureData'
+      tags:
+        - Features
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Feature'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Feature not found
+    delete:
+      summary: Remove a given Feature
+      description: |
+        This operation allows removing a given Feature.
+      operationId: deleteFeature 
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: featureId
+          in: path
+          type: number
+          format: int64
+          description: ID of the feature
+          required: true
+      tags:
+        - Features
+        - New in v.2
+      responses:
+        200:
+          description: Success
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Feature not found
+  /projects/{projectId}/features/{featureId}/skills:
+    post:
+      summary: Adds required skills to a feature
+      description: |
+        This operation allows adding more required skills to a given Feature by providing a list of the Skill ids.
+      operationId: addSkillsToFeature
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: featureId
+          in: path
+          type: number
+          format: int64
+          description: ID of the realese
+          required: true
+        - name: body
+          in: body
+          description: Array of Skill ids
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SkillId'
+      tags:
+        - Features
+        - Skills
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Feature'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Feature not found
+    delete:
+      summary: Delete required skills from a feature
+      description: |
+        This operation allows deleting required skills from a given Feature by providing the Skill ids.
+      operationId: deleteSkillsFromFeature
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: featureId
+          in: path
+          type: number
+          format: int64
+          description: ID of the realese
+          required: true
+        - name: skill_id
+          in: query
+          description: IDs of the skills to remove
+          required: true
+          type: array
+          items:
+            type: number
+            format: int64
+      tags:
+        - Features
+        - Skills
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Feature'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Release not found
+  /projects/{projectId}/features/{featureId}/dependencies:
+    post:
+      summary: Adds dependencies (to other features) to a feature
+      description: |
+        This operation allows adding more dependencies on other features by providing a list with the ids of those features
+      operationId: addDependenciesToFeature
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: featureId
+          in: path
+          type: number
+          format: int64
+          description: ID of the realese
+          required: true
+        - name: body
+          in: body
+          description: Array of Feature ids
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FeatureId'
+      tags:
+        - Features
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Feature'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Feature not found
+    delete:
+      summary: Delete dependencies (to other features) from a feature
+      description: |
+        This operation allows deleting dependencies on other features by providing the ids of those features
+      operationId: deleteDependenciesFromFeature
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: featureId
+          in: path
+          type: number
+          format: int64
+          description: ID of the feature
+          required: true
+        - name: feature_id
+          in: query
+          description: IDs of the features to remove as dependencies
+          required: true
+          type: array
+          items:
+            type: number
+            format: int64
+      tags:
+        - Features
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Feature'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Release not found
+  /projects/{projectId}/releases:
+    get:
+      summary: Get releases
+      operationId: getReleases
+      description: |
+        This operation returns a list with the Releases in a given Project.
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+      tags:
+        - Releases
+      responses:
+        200:
+          description: An array of releases
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Release'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project not found
+    post:
+      summary: Adds a new Release to the Project
+      description: |
+        This operation allows adding a new Release to a given Project by providing the following parameters: name, description and deadline
+      operationId: addNewReleaseToProject 
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: body
+          in: body
+          description: Parameters of the new Release
+          required: true
+          schema:
+            $ref: '#/definitions/NewRelease'
+      tags:
+        - Releases
+      responses:
+        200:
+          description: A new release
+          schema:
+            $ref: '#/definitions/Release'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project not found
+  /projects/{projectId}/releases/{releaseId}:
+    get:
+      summary: Get a release given its ID
+      description: |
+        This operation returns the main info of a Release given its releaseID.
+      operationId: getRelease
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: releaseId
+          in: path
+          type: number
+          format: int64
+          description: ID of the release
+          required: true
+      tags:
+        - Releases
+      responses:
+        200:
+          description: A Release
+          schema:
+            $ref: '#/definitions/Release'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Release not found
+    put:
+      summary: Modify a given release
+      operationId: modifyRelease 
+      description: |
+        This operation allows modifying a given Release providing new values for the following parameters: name, description and deadline
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: releaseId
+          in: path
+          type: number
+          format: int64
+          description: ID of the project
+          required: true
+        - name: body
+          in: body
+          description: Release parameters that can be modified
+          required: true
+          schema:
+            $ref: '#/definitions/ReleaseData'
+      tags:
+        - Releases
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Release'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Release not found
+    delete:
+      summary: Remove a given Release.
+      operationId: deleteRelease 
+      description: |
+        This operation allows removing a given Release from the Project.
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: releaseId
+          in: path
+          type: number
+          format: int64
+          description: ID of the project
+          required: true
+      tags:
+        - Releases
+      responses:
+        200:
+          description: Succes
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Release not found
+  /projects/{projectId}/releases/{releaseId}/resources:
+    post:
+      summary: Adds resources to a release
+      description: |
+        This operation allows assigning more resources to a given Release by providing a list with the Resource ids.
+      operationId: addResourcesToRelease
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: releaseId
+          in: path
+          type: number
+          format: int64
+          description: ID of the realese
+          required: true
+        - name: body
+          in: body
+          description: Array of Resource ids
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ResourceId'
+      tags:
+        - Releases
+        - Resources
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Release'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Release not found
+    delete:
+      summary: Delete resources from a release
+      description: |
+        This operation allows deallocating resources from a given Release by providing the ids of those resources.
+      operationId: deleteResourcesFromRelease
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: releaseId
+          in: path
+          type: number
+          format: int64
+          description: ID of the realese
+          required: true
+        - name: ResourceId
+          in: query
+          description: IDs of the resources to remove
+          required: true
+          type: array
+          items:
+            type: number
+            format: int64
+      tags:
+        - Releases
+        - Resources
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Release'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Release not found
+  /projects/{projectId}/releases/{releaseId}/features:
+    get:
+      summary: Get the features scheduled for a given release
+      description: |
+        This operation returns a list of the features scheduled for the given Release.
+      operationId: getReleaseFeatures
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: releaseId
+          in: path
+          type: number
+          format: int64
+          description: ID of the realese
+          required: true
+      tags:
+        - Releases
+        - Features
+      responses:
+        200:
+          description: An array of features
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Feature'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Release not found
+    post:
+      summary: Adds features to a release
+      description: |
+        This operation allows adding more features to a given Release by providing the list of the feature ids.
+      operationId: addFeaturesToRelease
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: releaseId
+          in: path
+          type: number
+          format: int64
+          description: ID of the realese
+          required: true
+        - name: body
+          in: body
+          description: Array of Feature ids
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FeatureId'
+      tags:
+        - Releases
+        - Features
+      responses:
+        200:
+          description: Success
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Release not found
+    delete:
+      summary: Remove features from a relese
+      description: |
+        This operation allows removing features from a given Release by providing the Feature ids.
+      operationId: removeFeaturesFromRelease 
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: releaseId
+          in: path
+          type: number
+          format: int64
+          description: ID of the realese
+          required: true
+        - name: featureId
+          in: query
+          description: IDs of the features to remove
+          required: true
+          type: array
+          items:
+            type: number
+            format: int64
+      tags:
+        - Releases
+        - Features
+      responses:
+        200:
+          description: Success
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project|Release|Feauture not found
+  /projects/{projectId}/releases/{releaseId}/plan:
+    get:
+      summary: Gets the current Release Plan
+      description: |
+        This operation calculates and then returns a new Release Plan for a given Release.
+      operationId: getReleasePlan
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: releaseId
+          in: path
+          type: number
+          format: int64
+          description: ID of the realese
+          required: true
+      tags:
+        - Releases
+        - Plan
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Plan'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Release not found
+    delete:
+      summary: Cancels the Release Plan
+      description: |
+        This operation cancels the Release Plan of the given Release.
+      operationId: cancelLastReleasePlan
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: releaseId
+          in: path
+          type: number
+          format: int64
+          description: ID of the realese
+          required: true
+      tags:
+        - Releases
+        - Plan
+      responses:
+        200:
+          description: Success
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Release not found
+  /projects/{projectId}/skills:
+    get:
+      summary: Get project skills
+      description: |
+        This operation retrieves a list of the possible skills required in the given Project.
+      operationId: getProjectSkills
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+      tags:
+        - Skills
+      responses:
+        200:
+          description: An array of skills
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Skill'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project not found
+    post:
+      summary: Create a new Skill
+      description: |
+        This operation allows defining a new Skill in the context of the given Project.
+      operationId: addNewSkillToProject
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: body
+          in: body
+          description: Skill parameters
+          required: true
+          schema:
+            $ref: '#/definitions/SkillData'
+      tags:
+        - Skills
+      responses:
+        200:
+          description: A new Skill
+          schema:
+            $ref: '#/definitions/Skill'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project not found
+  /projects/{projectId}/skills/{skillId}:
+    put:
+      summary: Modify a given Skill
+      description: |
+        This operation allows modifying the parameters of a given Skill, namely name and description.
+      operationId: modifySkill
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: skillId
+          in: path
+          type: number
+          format: int64
+          description: ID of the project
+          required: true
+        - name: body
+          in: body
+          description: Skill parameters that can be modified
+          required: true
+          schema:
+            $ref: '#/definitions/SkillData'
+      tags:
+        - Skills
+      responses:
+        200:
+          description: Success
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Skill not found
+    delete:
+      summary: Remove a given Skill
+      description: |
+        This operation allows removing a given Skill from the Project settings.
+      operationId: deleteSkill 
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: skillId
+          in: path
+          type: number
+          format: int64
+          description: ID of the project
+          required: true
+      tags:
+        - Skills
+      responses:
+        200:
+          description: Success
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Skill not found
+  /projects/{projectId}/resources:
+    get:
+      summary: Get project resources
+      description: |
+        This operation returns a list of the resources allocated to a given Project.
+      operationId: getProjectResources
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+      tags:
+        - Resources
+      responses:
+        200:
+          description: An array of resources
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Resource'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project not found
+    post:
+      summary: Add a new resource to the project
+      description: |
+        This operation allows defining a new Resource to be allocated to the given Project.
+      operationId: addNewResourceToProject
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: body
+          in: body
+          description: Resource parameters
+          required: true
+          schema:
+            $ref: '#/definitions/ResourceData'
+      tags:
+        - Resources
+      responses:
+        200:
+          description: A new Resource
+          schema:
+            $ref: '#/definitions/Resource'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project not found
+  /projects/{projectId}/resources/{resourceId}:
+    put:
+      summary: Modify a given Resource
+      description: |
+        This operation allows modifying the parameters of a given Resource, namely name, description, and availability.
+      operationId: modifyResource
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: resourceId
+          in: path
+          type: number
+          format: int64
+          description: ID of the resource
+          required: true
+        - name: body
+          in: body
+          description: Resource parameters that can be modified
+          required: true
+          schema:
+            $ref: '#/definitions/ResourceData'
+      tags:
+        - Resources
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Resource'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Resource not found
+    delete:
+      summary: Remove a given Resource
+      description: |
+        This operation removes and deallocates a given Resource from the Project.
+      operationId: deleteResource
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: resourceId
+          in: path
+          type: number
+          format: int64
+          description: ID of the resource
+          required: true
+      tags:
+        - Resources
+      responses:
+        200:
+          description: Success
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Resource not found
+  /projects/{projectId}/resources/{resourceId}/skills:
+    post:
+      summary: Add skills to a resource
+      description: |
+        This operation allows assigning more skills to a given Resource by providing a list of the Skill ids.
+      operationId: addSkillsToResource
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: resourceId
+          in: path
+          type: number
+          format: int64
+          description: ID of the resource
+          required: true
+        - name: body
+          in: body
+          description: Array of Skill ids
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SkillId'
+      tags:
+        - Resources
+        - Skills
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Resource'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Resource not found
+    delete:
+      summary: Remove skills from a resource
+      description: |
+        This operation allows removing skills from a given Resource by providing the Skill ids.
+      operationId: deleteSkillsFromResource
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: resourceId
+          in: path
+          type: number
+          format: int64
+          description: ID of the resource
+          required: true
+        - name: skillId
+          in: query
+          description: IDs of the skills to remove
+          required: true
+          type: array
+          items:
+            type: number
+            format: int64
+      tags:
+        - Resources
+        - Skills
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Resource'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project or Resource not found
+definitions:
+  Skill:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+        description: Display name of skill.
+      description:
+        type: string
+  SkillData:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Display name of skill.
+      description:
+        type: string
+  SkillId:
+    type: object
+    properties:
+      skill_id:
+        type: integer
+        description: Unique identifier representing a skill
+  FeatureId:
+    type: object
+    properties:
+      feature_id:
+        type: integer
+        description: Unique identifier representing a feature
+  Feature:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Unique identifier representing a feature
+      code:
+        type: integer
+        description: Unique identifier from WP3.3
+      name:
+        type: string
+        description: Display name of feature.
+      description:
+        type: string
+        description: Description of feature.
+      effort:
+        type: number
+        description: Effort to implement the feature.
+      deadline:
+        type: string
+        format: date-time
+      priority:
+        type: integer
+        enum: [ 1, 2, 3, 4, 5 ]
+        description: It coms from Wp3.3
+      required_skills:
+        type: array
+        items:
+          $ref: '#/definitions/Skill'
+      depends_on:
+        type: array
+        description: array of features
+        items:
+          $ref: '#/definitions/Feature'
+  NewFeatureData:
+    type: object
+    properties:
+      code:
+        type: integer
+        description: Unique identifier from WP3.3
+      name:
+        type: string
+        description: Display name of feature.
+      description:
+        type: string
+        description: Description of feature.
+      effort:
+        type: number
+        description: Effort to implement the feature.
+      deadline:
+        type: string
+        format: date-time
+      priority:
+        type: integer
+        enum: [ 1, 2, 3, 4, 5 ]
+        description: It coms from Wp3.3
+  FeatureData:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Display name of feature.
+      description:
+        type: string
+        description: Description of feature.
+      effort:
+        type: number
+        description: Effort to implement the feature.
+      deadline:
+        type: string
+        format: date-time
+      priority:
+        type: integer
+        enum: [ 1, 2, 3, 4, 5 ]
+        description: It coms from Wp3.3
+  Resource:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+        description: Display name of resource.
+      description:
+        type: string
+      availability:
+        type: number
+      skills:
+        type: array
+        items:
+          $ref: '#/definitions/Skill'
+  ResourceData:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Display name of resource.
+      description:
+        type: string
+      availability:
+        type: number
+  ResourceId:
+    type: object
+    properties:
+      resource_id:
+        type: integer
+        description: Unique identifier representing a resource
+  Release:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+        description: Display name of release.
+      description:
+        type: string
+      starts_at:
+        type: string
+        format: date-time
+      deadline:
+        type: string
+        format: date-time
+      resources:
+        type: array
+        items:
+          $ref: '#/definitions/Resource'
+  ReleaseData:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Display name of release.
+      description:
+        type: string
+      starts_at:
+        type: string
+        format: date-time
+      deadline:
+        type: string
+        format: date-time
+  NewRelease:
+    type: object
+    required:
+      - starts_at
+      - deadline
+    properties:
+      name:
+        type: string
+        description: Display name of release.
+      description:
+        type: string
+      starts_at:
+        type: string
+        format: date-time
+      deadline:
+        type: string
+        format: date-time
+  Project:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+        description: Display name of project.
+      description:
+        type: string
+      effort_unit:
+        type: string
+        description: e.g. "bin"
+      hours_per_effort_unit:
+        type: number
+      hours_per_week_and_full_time_resource:
+        type: number
+      resources:
+        type: array
+        items:
+          $ref: '#/definitions/Resource'
+  NewProjectData:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Display name of project.
+      description:
+        type: string
+      effort_unit:
+        type: string
+        description: e.g. "bin"
+      hours_per_effort_unit:
+        type: number
+      hours_per_week_and_full_time_resource:
+        type: number
+  ProjectData:
+    type: object
+    properties:
+      effort_unit:
+        type: string
+        description: e.g. "bin"
+      hours_per_effort_unit:
+        type: number
+      hours_per_week_and_full_time_resource:
+        type: number
+  Job:
+    type: object
+    properties:
+      starts:
+        type: string
+        format: date-time
+      ends:
+        type: string
+        format: date-time
+      resource:
+        $ref: '#/definitions/Resource'
+      feature:
+        $ref: '#/definitions/Feature'
+      depends_on:
+        type: array
+        description: array of jobs
+        items:
+          $ref: '#/definitions/Job'
+  Plan:
+    type: object
+    properties:
+      id:
+        type: integer
+      created_at:
+        type: string
+        format: date
+      release_id:
+        type: integer
+      jobs:
+        type: array
+        description: array of jobs
+        items:
+          $ref: '#/definitions/Job'
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string

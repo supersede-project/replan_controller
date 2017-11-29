@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   title: SUPERSEDE ReleasePlanner API to UI
   description: This API defines the operations that the Replan Controller component exposes to the Replan Dashboard (UI) component.
-  version: "2.1.3"
+  version: "2.1.4"
 # the domain of the service
 host: supersede.es.atos.net:8280
 # array of all schemes that your API supports
@@ -1277,6 +1277,10 @@ definitions:
       name:
         type: string
         description: Display name of feature.
+      jira_url:
+        type: string
+        description: URL of the feature in JIRA.
+        format: url
       description:
         type: string
         description: Description of feature.
@@ -1308,6 +1312,10 @@ definitions:
       name:
         type: string
         description: Display name of feature.
+      jira_url:
+        type: string
+        description: URL of the feature in JIRA.
+        format: url
       description:
         type: string
         description: Description of feature.
@@ -1327,6 +1335,10 @@ definitions:
       name:
         type: string
         description: Display name of feature.
+      jira_url:
+        type: string
+        description: URL of the feature in JIRA.
+        format: url
       description:
         type: string
         description: Description of feature.

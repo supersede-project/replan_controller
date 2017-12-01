@@ -136,12 +136,12 @@ class FeaturesController < ApplicationController
     end
     
     def feature_params
-      params.require(:feature).permit(:name, :description, :effort, :deadline,
+      params.require(:feature).permit(:name, :jira_url, :description, :effort, :deadline,
                                       :priority)
     end
     
     def feature_params_with_code
-      params.require(:feature).permit(:code, :name, :description, :effort, :deadline,
+      params.require(:feature).permit(:code, :name, :jira_url, :description, :effort, :deadline,
                                       :priority)
     end
 end

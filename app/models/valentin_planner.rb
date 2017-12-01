@@ -31,6 +31,7 @@ class ValentinPlanner
             rescue RestClient::Exceptions::ReadTimeout
             rescue RestClient::Exceptions::OpenTimeout
             rescue RestClient::InternalServerError
+            rescue Errno::ECONNREFUSED
             end
           end
           jobCount = jobArray.count

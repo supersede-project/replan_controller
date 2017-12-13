@@ -10,12 +10,12 @@ Rails.application.routes.draw do
 =end 
 
   def add_ui_route http_method, path, opts = {}
-    full_path = "/api/ui/v1" + path.gsub(/{(.*?)}/, ':\1')
+    full_path = "/replan" + path.gsub(/{(.*?)}/, ':\1')
     match full_path, to: "#{opts.fetch(:controller_name)}##{opts[:action_name]}", via: http_method
   end
   
   def add_wp3_route http_method, path, opts = {}
-    full_path = "/api/wp3/v1" + path.gsub(/{(.*?)}/, ':\1')
+    full_path = "/replan" + path.gsub(/{(.*?)}/, ':\1')
     match full_path, to: "#{opts.fetch(:controller_name)}##{opts[:action_name]}", via: http_method
   end
   

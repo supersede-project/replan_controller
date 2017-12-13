@@ -85,6 +85,8 @@ GEM
       mini_portile2 (~> 2.3.0)
     nokogiri (1.8.1-x86-mingw32)
       mini_portile2 (~> 2.3.0)
+    pg (0.20.0)
+    pg (0.20.0-x86-mingw32)
     puma (3.9.1)
     rack (2.0.3)
     rack-cors (1.0.1)
@@ -168,6 +170,7 @@ DEPENDENCIES
   business_time (~> 0.7.4)
   byebug (= 9.0.6)
   listen (= 3.0.8)
+  pg (= 0.20.0)
   puma (= 3.9.1)
   rack-cors
   rails (= 5.1.4)
@@ -179,4 +182,4 @@ DEPENDENCIES
   web-console (= 3.5.1)
 
 BUNDLED WITH
-   1.15.4
+   1.16.0

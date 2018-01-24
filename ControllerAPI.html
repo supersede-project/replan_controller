@@ -1,0 +1,3878 @@
+<!doctype html>
+<html>
+  <head>
+    <title>SUPERSEDE ReleasePlanner API to UI</title>
+    <style type="text/css">
+      body {
+	font-family: Trebuchet MS, sans-serif;
+	font-size: 15px;
+	color: #444;
+	margin-right: 24px;
+}
+
+h1	{
+	font-size: 25px;
+}
+h2	{
+	font-size: 20px;
+}
+h3	{
+	font-size: 16px;
+	font-weight: bold;
+}
+hr	{
+	height: 1px;
+	border: 0;
+	color: #ddd;
+	background-color: #ddd;
+}
+
+.app-desc {
+  clear: both;
+  margin-left: 20px;
+}
+.param-name {
+  width: 100%;
+}
+.license-info {
+  margin-left: 20px;
+}
+
+.license-url {
+  margin-left: 20px;
+}
+
+.model {
+  margin: 0 0 0px 20px;
+}
+
+.method {
+  margin-left: 20px;
+}
+
+.method-notes	{
+	margin: 10px 0 20px 0;
+	font-size: 90%;
+	color: #555;
+}
+
+pre {
+  padding: 10px;
+  margin-bottom: 2px;
+}
+
+.http-method {
+ text-transform: uppercase;
+}
+
+pre.get {
+  background-color: #0f6ab4;
+}
+
+pre.post {
+  background-color: #10a54a;
+}
+
+pre.put {
+  background-color: #c5862b;
+}
+
+pre.delete {
+  background-color: #a41e22;
+}
+
+.huge	{
+	color: #fff;
+}
+
+pre.example {
+  background-color: #f3f3f3;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+code {
+  white-space: pre;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.method-path {
+  font-size: 1.5em;
+  background-color: #0f6ab4;
+}
+
+.up {
+  float:right;
+}
+
+.parameter {
+  width: 500px;
+}
+
+.param {
+  width: 500px;
+  padding: 10px 0 0 20px;
+  font-weight: bold;
+}
+
+.param-desc {
+  width: 700px;
+  padding: 0 0 0 20px;
+  color: #777;
+}
+
+.param-type {
+  font-style: italic;
+}
+
+.param-enum-header {
+width: 700px;
+padding: 0 0 0 60px;
+color: #777;
+font-weight: bold;
+}
+
+.param-enum {
+width: 700px;
+padding: 0 0 0 80px;
+color: #777;
+font-style: italic;
+}
+
+.field-label {
+  padding: 0;
+  margin: 0;
+  clear: both;
+}
+
+.field-items	{
+	padding: 0 0 15px 0;
+	margin-bottom: 15px;
+}
+
+.return-type {
+  clear: both;
+  padding-bottom: 10px;
+}
+
+.param-header {
+  font-weight: bold;
+}
+
+.method-tags {
+  text-align: right;
+}
+
+.method-tag {
+  background: none repeat scroll 0% 0% #24A600;
+  border-radius: 3px;
+  padding: 2px 10px;
+  margin: 2px;
+  color: #FFF;
+  display: inline-block;
+  text-decoration: none;
+}
+
+    </style>
+  </head>
+  <body>
+  <h1>SUPERSEDE RePlan Controller API</h1>
+    <div class="app-desc">This API defines the operations of the RePlan Controller </div>
+    <div class="app-desc">More information: <a href="https://github.com/supersede-project/replan_controller">https://github.com/supersede-project/replan_controller</a></div>
+    <div class="app-desc">Contact Info: <a href="farre@essi.upc.edu">farre@essi.upc.edu</a></div>
+    <div class="app-desc">Version: 2.1.4</div>
+    <div class="app-desc">BasePath:/replan</div>
+    <div class="license-info">All rights reserved</div>
+    <div class="license-url">http://apache.org/licenses/LICENSE-2.0.html</div>
+  <h2>Access</h2>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#Features">Features</a></h4>
+  <ul>
+  <li><a href="#addDependenciesToFeature"><code><span class="http-method">post</span> /projects/{projectId}/features/{featureId}/dependencies</code></a></li>
+  <li><a href="#addFeaturesToRelease"><code><span class="http-method">post</span> /projects/{projectId}/releases/{releaseId}/features</code></a></li>
+  <li><a href="#addSkillsToFeature"><code><span class="http-method">post</span> /projects/{projectId}/features/{featureId}/skills</code></a></li>
+  <li><a href="#createFeature"><code><span class="http-method">post</span> /projects/{projectId}/features/create_one</code></a></li>
+  <li><a href="#deleteDependenciesFromFeature"><code><span class="http-method">delete</span> /projects/{projectId}/features/{featureId}/dependencies</code></a></li>
+  <li><a href="#deleteFeature"><code><span class="http-method">delete</span> /projects/{projectId}/features/{featureId}</code></a></li>
+  <li><a href="#deleteSkillsFromFeature"><code><span class="http-method">delete</span> /projects/{projectId}/features/{featureId}/skills</code></a></li>
+  <li><a href="#getFeature"><code><span class="http-method">get</span> /projects/{projectId}/features/{featureId}</code></a></li>
+  <li><a href="#getFeatures"><code><span class="http-method">get</span> /projects/{projectId}/features</code></a></li>
+  <li><a href="#getReleaseFeatures"><code><span class="http-method">get</span> /projects/{projectId}/releases/{releaseId}/features</code></a></li>
+  <li><a href="#modifyFeature"><code><span class="http-method">put</span> /projects/{projectId}/features/{featureId}</code></a></li>
+  <li><a href="#removeFeaturesFromRelease"><code><span class="http-method">delete</span> /projects/{projectId}/releases/{releaseId}/features</code></a></li>
+  </ul>
+  <h4><a href="#NewInV21">NewInV21</a></h4>
+  <ul>
+  <li><a href="#notifyCompletedJobs"><code><span class="http-method">put</span> /projects/{projectId}/releases/{releaseId}/plan</code></a></li>
+  </ul>
+  <h4><a href="#Plan">Plan</a></h4>
+  <ul>
+  <li><a href="#cancelLastReleasePlan"><code><span class="http-method">delete</span> /projects/{projectId}/releases/{releaseId}/plan</code></a></li>
+  <li><a href="#getReleasePlan"><code><span class="http-method">get</span> /projects/{projectId}/releases/{releaseId}/plan</code></a></li>
+  <li><a href="#notifyCompletedJobs"><code><span class="http-method">put</span> /projects/{projectId}/releases/{releaseId}/plan</code></a></li>
+  </ul>
+  <h4><a href="#Projects">Projects</a></h4>
+  <ul>
+  <li><a href="#createProject"><code><span class="http-method">post</span> /projects</code></a></li>
+  <li><a href="#deleteProject"><code><span class="http-method">delete</span> /projects/{projectId}</code></a></li>
+  <li><a href="#getProject"><code><span class="http-method">get</span> /projects/{projectId}</code></a></li>
+  <li><a href="#getProjects"><code><span class="http-method">get</span> /projects</code></a></li>
+  <li><a href="#modifyProject"><code><span class="http-method">put</span> /projects/{projectId}</code></a></li>
+  </ul>
+  <h4><a href="#Releases">Releases</a></h4>
+  <ul>
+  <li><a href="#addFeaturesToRelease"><code><span class="http-method">post</span> /projects/{projectId}/releases/{releaseId}/features</code></a></li>
+  <li><a href="#addNewReleaseToProject"><code><span class="http-method">post</span> /projects/{projectId}/releases</code></a></li>
+  <li><a href="#addResourcesToRelease"><code><span class="http-method">post</span> /projects/{projectId}/releases/{releaseId}/resources</code></a></li>
+  <li><a href="#cancelLastReleasePlan"><code><span class="http-method">delete</span> /projects/{projectId}/releases/{releaseId}/plan</code></a></li>
+  <li><a href="#deleteRelease"><code><span class="http-method">delete</span> /projects/{projectId}/releases/{releaseId}</code></a></li>
+  <li><a href="#deleteResourcesFromRelease"><code><span class="http-method">delete</span> /projects/{projectId}/releases/{releaseId}/resources</code></a></li>
+  <li><a href="#getRelease"><code><span class="http-method">get</span> /projects/{projectId}/releases/{releaseId}</code></a></li>
+  <li><a href="#getReleaseFeatures"><code><span class="http-method">get</span> /projects/{projectId}/releases/{releaseId}/features</code></a></li>
+  <li><a href="#getReleasePlan"><code><span class="http-method">get</span> /projects/{projectId}/releases/{releaseId}/plan</code></a></li>
+  <li><a href="#getReleases"><code><span class="http-method">get</span> /projects/{projectId}/releases</code></a></li>
+  <li><a href="#modifyRelease"><code><span class="http-method">put</span> /projects/{projectId}/releases/{releaseId}</code></a></li>
+  <li><a href="#notifyCompletedJobs"><code><span class="http-method">put</span> /projects/{projectId}/releases/{releaseId}/plan</code></a></li>
+  <li><a href="#removeFeaturesFromRelease"><code><span class="http-method">delete</span> /projects/{projectId}/releases/{releaseId}/features</code></a></li>
+  </ul>
+  <h4><a href="#Resources">Resources</a></h4>
+  <ul>
+  <li><a href="#addNewResourceToProject"><code><span class="http-method">post</span> /projects/{projectId}/resources</code></a></li>
+  <li><a href="#addResourcesToRelease"><code><span class="http-method">post</span> /projects/{projectId}/releases/{releaseId}/resources</code></a></li>
+  <li><a href="#addSkillsToResource"><code><span class="http-method">post</span> /projects/{projectId}/resources/{resourceId}/skills</code></a></li>
+  <li><a href="#deleteResource"><code><span class="http-method">delete</span> /projects/{projectId}/resources/{resourceId}</code></a></li>
+  <li><a href="#deleteResourcesFromRelease"><code><span class="http-method">delete</span> /projects/{projectId}/releases/{releaseId}/resources</code></a></li>
+  <li><a href="#deleteSkillsFromResource"><code><span class="http-method">delete</span> /projects/{projectId}/resources/{resourceId}/skills</code></a></li>
+  <li><a href="#getProjectResources"><code><span class="http-method">get</span> /projects/{projectId}/resources</code></a></li>
+  <li><a href="#modifyResource"><code><span class="http-method">put</span> /projects/{projectId}/resources/{resourceId}</code></a></li>
+  </ul>
+  <h4><a href="#Skills">Skills</a></h4>
+  <ul>
+  <li><a href="#addNewSkillToProject"><code><span class="http-method">post</span> /projects/{projectId}/skills</code></a></li>
+  <li><a href="#addSkillsToFeature"><code><span class="http-method">post</span> /projects/{projectId}/features/{featureId}/skills</code></a></li>
+  <li><a href="#addSkillsToResource"><code><span class="http-method">post</span> /projects/{projectId}/resources/{resourceId}/skills</code></a></li>
+  <li><a href="#deleteSkill"><code><span class="http-method">delete</span> /projects/{projectId}/skills/{skillId}</code></a></li>
+  <li><a href="#deleteSkillsFromFeature"><code><span class="http-method">delete</span> /projects/{projectId}/features/{featureId}/skills</code></a></li>
+  <li><a href="#deleteSkillsFromResource"><code><span class="http-method">delete</span> /projects/{projectId}/resources/{resourceId}/skills</code></a></li>
+  <li><a href="#getProjectSkills"><code><span class="http-method">get</span> /projects/{projectId}/skills</code></a></li>
+  <li><a href="#modifySkill"><code><span class="http-method">put</span> /projects/{projectId}/skills/{skillId}</code></a></li>
+  </ul>
+
+  <h1><a name="Features">Features</a></h1>
+  <div class="method"><a name="addDependenciesToFeature"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /projects/{projectId}/features/{featureId}/dependencies</code></pre></div>
+    <div class="method-summary">Adds dependencies (to other features) to a feature (<span class="nickname">addDependenciesToFeature</span>)</div>
+    <div class="method-notes">This operation allows adding more dependencies on other features by providing a list with the ids of those features</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">featureId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#FeatureId">FeatureId</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Array of Feature ids </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Feature">Feature</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "code" : 6,
+  "depends_on" : [ "" ],
+  "required_skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 5
+  } ],
+  "name" : "aeiou",
+  "jira_url" : "http://example.com/aeiou",
+  "description" : "aeiou",
+  "effort" : 1.46581298050294517310021547018550336360931396484375,
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00",
+  "priority" : 5
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Feature">Feature</a>
+    <h4 class="field-label">404</h4>
+    Project or Feature not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="addFeaturesToRelease"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /projects/{projectId}/releases/{releaseId}/features</code></pre></div>
+    <div class="method-summary">Adds features to a release (<span class="nickname">addFeaturesToRelease</span>)</div>
+    <div class="method-notes">This operation allows adding more features to a given Release by providing the list of the feature ids.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#FeatureId">FeatureId</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Array of Feature ids </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="addSkillsToFeature"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /projects/{projectId}/features/{featureId}/skills</code></pre></div>
+    <div class="method-summary">Adds required skills to a feature (<span class="nickname">addSkillsToFeature</span>)</div>
+    <div class="method-notes">This operation allows adding more required skills to a given Feature by providing a list of the Skill ids.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">featureId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#SkillId">SkillId</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Array of Skill ids </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Feature">Feature</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "code" : 6,
+  "depends_on" : [ "" ],
+  "required_skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 5
+  } ],
+  "name" : "aeiou",
+  "jira_url" : "http://example.com/aeiou",
+  "description" : "aeiou",
+  "effort" : 1.46581298050294517310021547018550336360931396484375,
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00",
+  "priority" : 5
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Feature">Feature</a>
+    <h4 class="field-label">404</h4>
+    Project or Feature not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="createFeature"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /projects/{projectId}/features/create_one</code></pre></div>
+    <div class="method-summary">Create a new Feature (<span class="nickname">createFeature</span>)</div>
+    <div class="method-notes">This operation allows defining a new Feature for a given Project.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#NewFeatureData">NewFeatureData</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Project parameters </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Feature">Feature</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "code" : 6,
+  "depends_on" : [ "" ],
+  "required_skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 5
+  } ],
+  "name" : "aeiou",
+  "jira_url" : "http://example.com/aeiou",
+  "description" : "aeiou",
+  "effort" : 1.46581298050294517310021547018550336360931396484375,
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00",
+  "priority" : 5
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    A new Feature
+        <a href="#Feature">Feature</a>
+    <h4 class="field-label">400</h4>
+    Already exists feature with that 'code'
+        <a href="#Error">Error</a>
+    <h4 class="field-label">404</h4>
+    Project not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteDependenciesFromFeature"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /projects/{projectId}/features/{featureId}/dependencies</code></pre></div>
+    <div class="method-summary">Delete dependencies (to other features) from a feature (<span class="nickname">deleteDependenciesFromFeature</span>)</div>
+    <div class="method-notes">This operation allows deleting dependencies on other features by providing the ids of those features</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">featureId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the feature format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">feature_id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; IDs of the features to remove as dependencies format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Feature">Feature</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "code" : 6,
+  "depends_on" : [ "" ],
+  "required_skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 5
+  } ],
+  "name" : "aeiou",
+  "jira_url" : "http://example.com/aeiou",
+  "description" : "aeiou",
+  "effort" : 1.46581298050294517310021547018550336360931396484375,
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00",
+  "priority" : 5
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Feature">Feature</a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteFeature"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /projects/{projectId}/features/{featureId}</code></pre></div>
+    <div class="method-summary">Remove a given Feature (<span class="nickname">deleteFeature</span>)</div>
+    <div class="method-notes">This operation allows removing a given Feature.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">featureId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the feature format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Project or Feature not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteSkillsFromFeature"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /projects/{projectId}/features/{featureId}/skills</code></pre></div>
+    <div class="method-summary">Delete required skills from a feature (<span class="nickname">deleteSkillsFromFeature</span>)</div>
+    <div class="method-notes">This operation allows deleting required skills from a given Feature by providing the Skill ids.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">featureId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">skill_id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; IDs of the skills to remove format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Feature">Feature</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "code" : 6,
+  "depends_on" : [ "" ],
+  "required_skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 5
+  } ],
+  "name" : "aeiou",
+  "jira_url" : "http://example.com/aeiou",
+  "description" : "aeiou",
+  "effort" : 1.46581298050294517310021547018550336360931396484375,
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00",
+  "priority" : 5
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Feature">Feature</a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getFeature"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /projects/{projectId}/features/{featureId}</code></pre></div>
+    <div class="method-summary">Get a feature given its ID (<span class="nickname">getFeature</span>)</div>
+    <div class="method-notes">This operation returns the main info of a Feature given its featureID.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">featureId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the feature format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Feature">Feature</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "code" : 6,
+  "depends_on" : [ "" ],
+  "required_skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 5
+  } ],
+  "name" : "aeiou",
+  "jira_url" : "http://example.com/aeiou",
+  "description" : "aeiou",
+  "effort" : 1.46581298050294517310021547018550336360931396484375,
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00",
+  "priority" : 5
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    An array of features
+        <a href="#Feature">Feature</a>
+    <h4 class="field-label">404</h4>
+    Project or Feature not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getFeatures"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /projects/{projectId}/features</code></pre></div>
+    <div class="method-summary">Get features (<span class="nickname">getFeatures</span>)</div>
+    <div class="method-notes">This operation returns a list of Features for a given Project. This list can be filtered by Feature status: pending or scheduled.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">status (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; any | pending | in_release | scheduled </div><div class="param">code (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; comma-separated feature codes </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Feature">Feature</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "code" : 6,
+  "depends_on" : [ "" ],
+  "required_skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 5
+  } ],
+  "name" : "aeiou",
+  "jira_url" : "http://example.com/aeiou",
+  "description" : "aeiou",
+  "effort" : 1.46581298050294517310021547018550336360931396484375,
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00",
+  "priority" : 5
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    An array of features
+        
+    <h4 class="field-label">404</h4>
+    Project not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getReleaseFeatures"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /projects/{projectId}/releases/{releaseId}/features</code></pre></div>
+    <div class="method-summary">Get the features scheduled for a given release (<span class="nickname">getReleaseFeatures</span>)</div>
+    <div class="method-notes">This operation returns a list of the features scheduled for the given Release.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Feature">Feature</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "code" : 6,
+  "depends_on" : [ "" ],
+  "required_skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 5
+  } ],
+  "name" : "aeiou",
+  "jira_url" : "http://example.com/aeiou",
+  "description" : "aeiou",
+  "effort" : 1.46581298050294517310021547018550336360931396484375,
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00",
+  "priority" : 5
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    An array of features
+        
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="modifyFeature"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /projects/{projectId}/features/{featureId}</code></pre></div>
+    <div class="method-summary">Modifies a given feature (<span class="nickname">modifyFeature</span>)</div>
+    <div class="method-notes">This operation allows modifying some parameters of a given Feature: name, description, effort, deadline and priority.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">featureId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the feature format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#FeatureData">FeatureData</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Feature parameters that can be modified </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Feature">Feature</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "code" : 6,
+  "depends_on" : [ "" ],
+  "required_skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 5
+  } ],
+  "name" : "aeiou",
+  "jira_url" : "http://example.com/aeiou",
+  "description" : "aeiou",
+  "effort" : 1.46581298050294517310021547018550336360931396484375,
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00",
+  "priority" : 5
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Feature">Feature</a>
+    <h4 class="field-label">404</h4>
+    Project or Feature not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="removeFeaturesFromRelease"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /projects/{projectId}/releases/{releaseId}/features</code></pre></div>
+    <div class="method-summary">Remove features from a relese (<span class="nickname">removeFeaturesFromRelease</span>)</div>
+    <div class="method-notes">This operation allows removing features from a given Release by providing the Feature ids.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">featureId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; IDs of the features to remove format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Project|Release|Feauture not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="NewInV21">NewInV21</a></h1>
+  <div class="method"><a name="notifyCompletedJobs"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /projects/{projectId}/releases/{releaseId}/plan</code></pre></div>
+    <div class="method-summary">Communicates completed jobs (<span class="nickname">notifyCompletedJobs</span>)</div>
+    <div class="method-notes">This operation communicates plan's jobs that has been completed</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#CompletedJob">CompletedJob</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Array of {job_id, compteted_at} </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Plan">Plan</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "release_id" : 6,
+  "resource_usage" : [ {
+    "total_used_hours" : 1.231513536777255612975068288506008684635162353515625,
+    "resource_id" : 4,
+    "resource_name" : "aeiou",
+    "total_available_hours" : 7.3862819483858839220147274318151175975799560546875
+  } ],
+  "jobs" : [ {
+    "depends_on" : [ "" ],
+    "feature" : {
+      "code" : 9,
+      "depends_on" : [ "" ],
+      "required_skills" : [ "" ],
+      "name" : "aeiou",
+      "jira_url" : "http://example.com/aeiou",
+      "description" : "aeiou",
+      "effort" : 3.61607674925191080461672754609026014804840087890625,
+      "id" : 7,
+      "deadline" : "2000-01-23T04:56:07.000+00:00",
+      "priority" : 2
+    },
+    "resource" : {
+      "skills" : [ {
+        "name" : "aeiou",
+        "description" : "aeiou",
+        "id" : 2
+      } ],
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 5,
+      "availability" : 5.63737665663332876420099637471139430999755859375
+    },
+    "ends" : "2000-01-23T04:56:07.000+00:00",
+    "id" : 1,
+    "starts" : "2000-01-23T04:56:07.000+00:00"
+  } ],
+  "created_at" : "2000-01-23",
+  "id" : 0
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success. Returns a (probably new) Release Plan
+        <a href="#Plan">Plan</a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Plan">Plan</a></h1>
+  <div class="method"><a name="cancelLastReleasePlan"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /projects/{projectId}/releases/{releaseId}/plan</code></pre></div>
+    <div class="method-summary">Cancels the Release Plan (<span class="nickname">cancelLastReleasePlan</span>)</div>
+    <div class="method-notes">This operation cancels the Release Plan of the given Release.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getReleasePlan"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /projects/{projectId}/releases/{releaseId}/plan</code></pre></div>
+    <div class="method-summary">Gets the current Release Plan (<span class="nickname">getReleasePlan</span>)</div>
+    <div class="method-notes">This operation calculates and then returns a new Release Plan for a given Release.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">force_new (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; If true a new plan is created </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Plan">Plan</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "release_id" : 6,
+  "resource_usage" : [ {
+    "total_used_hours" : 1.231513536777255612975068288506008684635162353515625,
+    "resource_id" : 4,
+    "resource_name" : "aeiou",
+    "total_available_hours" : 7.3862819483858839220147274318151175975799560546875
+  } ],
+  "jobs" : [ {
+    "depends_on" : [ "" ],
+    "feature" : {
+      "code" : 9,
+      "depends_on" : [ "" ],
+      "required_skills" : [ "" ],
+      "name" : "aeiou",
+      "jira_url" : "http://example.com/aeiou",
+      "description" : "aeiou",
+      "effort" : 3.61607674925191080461672754609026014804840087890625,
+      "id" : 7,
+      "deadline" : "2000-01-23T04:56:07.000+00:00",
+      "priority" : 2
+    },
+    "resource" : {
+      "skills" : [ {
+        "name" : "aeiou",
+        "description" : "aeiou",
+        "id" : 2
+      } ],
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 5,
+      "availability" : 5.63737665663332876420099637471139430999755859375
+    },
+    "ends" : "2000-01-23T04:56:07.000+00:00",
+    "id" : 1,
+    "starts" : "2000-01-23T04:56:07.000+00:00"
+  } ],
+  "created_at" : "2000-01-23",
+  "id" : 0
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Plan">Plan</a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="notifyCompletedJobs"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /projects/{projectId}/releases/{releaseId}/plan</code></pre></div>
+    <div class="method-summary">Communicates completed jobs (<span class="nickname">notifyCompletedJobs</span>)</div>
+    <div class="method-notes">This operation communicates plan's jobs that has been completed</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#CompletedJob">CompletedJob</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Array of {job_id, compteted_at} </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Plan">Plan</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "release_id" : 6,
+  "resource_usage" : [ {
+    "total_used_hours" : 1.231513536777255612975068288506008684635162353515625,
+    "resource_id" : 4,
+    "resource_name" : "aeiou",
+    "total_available_hours" : 7.3862819483858839220147274318151175975799560546875
+  } ],
+  "jobs" : [ {
+    "depends_on" : [ "" ],
+    "feature" : {
+      "code" : 9,
+      "depends_on" : [ "" ],
+      "required_skills" : [ "" ],
+      "name" : "aeiou",
+      "jira_url" : "http://example.com/aeiou",
+      "description" : "aeiou",
+      "effort" : 3.61607674925191080461672754609026014804840087890625,
+      "id" : 7,
+      "deadline" : "2000-01-23T04:56:07.000+00:00",
+      "priority" : 2
+    },
+    "resource" : {
+      "skills" : [ {
+        "name" : "aeiou",
+        "description" : "aeiou",
+        "id" : 2
+      } ],
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 5,
+      "availability" : 5.63737665663332876420099637471139430999755859375
+    },
+    "ends" : "2000-01-23T04:56:07.000+00:00",
+    "id" : 1,
+    "starts" : "2000-01-23T04:56:07.000+00:00"
+  } ],
+  "created_at" : "2000-01-23",
+  "id" : 0
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success. Returns a (probably new) Release Plan
+        <a href="#Plan">Plan</a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Projects">Projects</a></h1>
+  <div class="method"><a name="createProject"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /projects</code></pre></div>
+    <div class="method-summary">Create a new Project (<span class="nickname">createProject</span>)</div>
+    <div class="method-notes">This operation allows defining a new Project.</div>
+
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#NewProjectData">NewProjectData</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Project parameters </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Project">Project</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "hours_per_effort_unit" : 6.02745618307040320615897144307382404804229736328125,
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "effort_unit" : "aeiou",
+  "resources" : [ {
+    "skills" : [ {
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 2
+    } ],
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 5,
+    "availability" : 5.63737665663332876420099637471139430999755859375
+  } ],
+  "id" : 0,
+  "hours_per_week_and_full_time_resource" : 1.46581298050294517310021547018550336360931396484375
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    A new Project
+        <a href="#Project">Project</a>
+    <h4 class="field-label">404</h4>
+    Project not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteProject"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /projects/{projectId}</code></pre></div>
+    <div class="method-summary">Remove a given Project (<span class="nickname">deleteProject</span>)</div>
+    <div class="method-notes">This operation allows removing a given Project.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Project not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getProject"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /projects/{projectId}</code></pre></div>
+    <div class="method-summary">Get Project info (<span class="nickname">getProject</span>)</div>
+    <div class="method-notes">This operation returns the main info for a given Project: name, resources, effort unit, etc.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Project">Project</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "hours_per_effort_unit" : 6.02745618307040320615897144307382404804229736328125,
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "effort_unit" : "aeiou",
+  "resources" : [ {
+    "skills" : [ {
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 2
+    } ],
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 5,
+    "availability" : 5.63737665663332876420099637471139430999755859375
+  } ],
+  "id" : 0,
+  "hours_per_week_and_full_time_resource" : 1.46581298050294517310021547018550336360931396484375
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Project info
+        <a href="#Project">Project</a>
+    <h4 class="field-label">404</h4>
+    Project not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getProjects"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /projects</code></pre></div>
+    <div class="method-summary">Get projects (<span class="nickname">getProjects</span>)</div>
+    <div class="method-notes">This operation retrieves a list of projects.</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Project">Project</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "hours_per_effort_unit" : 6.02745618307040320615897144307382404804229736328125,
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "effort_unit" : "aeiou",
+  "resources" : [ {
+    "skills" : [ {
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 2
+    } ],
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 5,
+    "availability" : 5.63737665663332876420099637471139430999755859375
+  } ],
+  "id" : 0,
+  "hours_per_week_and_full_time_resource" : 1.46581298050294517310021547018550336360931396484375
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    An array of projects
+        
+    <h4 class="field-label">404</h4>
+    Project not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="modifyProject"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /projects/{projectId}</code></pre></div>
+    <div class="method-summary">Modify Project (<span class="nickname">modifyProject</span>)</div>
+    <div class="method-notes">This operation allows modyfing some parameters of a given Project: effort unit, number of hours per effor unit and number of hours per week for a full time resource.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#ProjectData">ProjectData</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Project's parameters that can be modified </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Project">Project</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "hours_per_effort_unit" : 6.02745618307040320615897144307382404804229736328125,
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "effort_unit" : "aeiou",
+  "resources" : [ {
+    "skills" : [ {
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 2
+    } ],
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 5,
+    "availability" : 5.63737665663332876420099637471139430999755859375
+  } ],
+  "id" : 0,
+  "hours_per_week_and_full_time_resource" : 1.46581298050294517310021547018550336360931396484375
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Project">Project</a>
+    <h4 class="field-label">404</h4>
+    Project not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Releases">Releases</a></h1>
+  <div class="method"><a name="addFeaturesToRelease"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /projects/{projectId}/releases/{releaseId}/features</code></pre></div>
+    <div class="method-summary">Adds features to a release (<span class="nickname">addFeaturesToRelease</span>)</div>
+    <div class="method-notes">This operation allows adding more features to a given Release by providing the list of the feature ids.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#FeatureId">FeatureId</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Array of Feature ids </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="addNewReleaseToProject"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /projects/{projectId}/releases</code></pre></div>
+    <div class="method-summary">Adds a new Release to the Project (<span class="nickname">addNewReleaseToProject</span>)</div>
+    <div class="method-notes">This operation allows adding a new Release to a given Project by providing the following parameters: name, description and deadline</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#NewRelease">NewRelease</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Parameters of the new Release </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Release">Release</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "starts_at" : "2000-01-23T04:56:07.000+00:00",
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "resources" : [ {
+    "skills" : [ {
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 5
+    } ],
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 6,
+    "availability" : 1.46581298050294517310021547018550336360931396484375
+  } ],
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    A new release
+        <a href="#Release">Release</a>
+    <h4 class="field-label">404</h4>
+    Project not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="addResourcesToRelease"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /projects/{projectId}/releases/{releaseId}/resources</code></pre></div>
+    <div class="method-summary">Adds resources to a release (<span class="nickname">addResourcesToRelease</span>)</div>
+    <div class="method-notes">This operation allows assigning more resources to a given Release by providing a list with the Resource ids.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#ResourceId">ResourceId</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Array of Resource ids </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Release">Release</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "starts_at" : "2000-01-23T04:56:07.000+00:00",
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "resources" : [ {
+    "skills" : [ {
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 5
+    } ],
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 6,
+    "availability" : 1.46581298050294517310021547018550336360931396484375
+  } ],
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Release">Release</a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="cancelLastReleasePlan"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /projects/{projectId}/releases/{releaseId}/plan</code></pre></div>
+    <div class="method-summary">Cancels the Release Plan (<span class="nickname">cancelLastReleasePlan</span>)</div>
+    <div class="method-notes">This operation cancels the Release Plan of the given Release.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteRelease"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /projects/{projectId}/releases/{releaseId}</code></pre></div>
+    <div class="method-summary">Remove a given Release. (<span class="nickname">deleteRelease</span>)</div>
+    <div class="method-notes">This operation allows removing a given Release from the Project.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Succes
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteResourcesFromRelease"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /projects/{projectId}/releases/{releaseId}/resources</code></pre></div>
+    <div class="method-summary">Delete resources from a release (<span class="nickname">deleteResourcesFromRelease</span>)</div>
+    <div class="method-notes">This operation allows deallocating resources from a given Release by providing the ids of those resources.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">ResourceId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; IDs of the resources to remove format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Release">Release</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "starts_at" : "2000-01-23T04:56:07.000+00:00",
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "resources" : [ {
+    "skills" : [ {
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 5
+    } ],
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 6,
+    "availability" : 1.46581298050294517310021547018550336360931396484375
+  } ],
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Release">Release</a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getRelease"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /projects/{projectId}/releases/{releaseId}</code></pre></div>
+    <div class="method-summary">Get a release given its ID (<span class="nickname">getRelease</span>)</div>
+    <div class="method-notes">This operation returns the main info of a Release given its releaseID.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the release format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Release">Release</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "starts_at" : "2000-01-23T04:56:07.000+00:00",
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "resources" : [ {
+    "skills" : [ {
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 5
+    } ],
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 6,
+    "availability" : 1.46581298050294517310021547018550336360931396484375
+  } ],
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    A Release
+        <a href="#Release">Release</a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getReleaseFeatures"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /projects/{projectId}/releases/{releaseId}/features</code></pre></div>
+    <div class="method-summary">Get the features scheduled for a given release (<span class="nickname">getReleaseFeatures</span>)</div>
+    <div class="method-notes">This operation returns a list of the features scheduled for the given Release.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Feature">Feature</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "code" : 6,
+  "depends_on" : [ "" ],
+  "required_skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 5
+  } ],
+  "name" : "aeiou",
+  "jira_url" : "http://example.com/aeiou",
+  "description" : "aeiou",
+  "effort" : 1.46581298050294517310021547018550336360931396484375,
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00",
+  "priority" : 5
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    An array of features
+        
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getReleasePlan"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /projects/{projectId}/releases/{releaseId}/plan</code></pre></div>
+    <div class="method-summary">Gets the current Release Plan (<span class="nickname">getReleasePlan</span>)</div>
+    <div class="method-notes">This operation calculates and then returns a new Release Plan for a given Release.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">force_new (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; If true a new plan is created </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Plan">Plan</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "release_id" : 6,
+  "resource_usage" : [ {
+    "total_used_hours" : 1.231513536777255612975068288506008684635162353515625,
+    "resource_id" : 4,
+    "resource_name" : "aeiou",
+    "total_available_hours" : 7.3862819483858839220147274318151175975799560546875
+  } ],
+  "jobs" : [ {
+    "depends_on" : [ "" ],
+    "feature" : {
+      "code" : 9,
+      "depends_on" : [ "" ],
+      "required_skills" : [ "" ],
+      "name" : "aeiou",
+      "jira_url" : "http://example.com/aeiou",
+      "description" : "aeiou",
+      "effort" : 3.61607674925191080461672754609026014804840087890625,
+      "id" : 7,
+      "deadline" : "2000-01-23T04:56:07.000+00:00",
+      "priority" : 2
+    },
+    "resource" : {
+      "skills" : [ {
+        "name" : "aeiou",
+        "description" : "aeiou",
+        "id" : 2
+      } ],
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 5,
+      "availability" : 5.63737665663332876420099637471139430999755859375
+    },
+    "ends" : "2000-01-23T04:56:07.000+00:00",
+    "id" : 1,
+    "starts" : "2000-01-23T04:56:07.000+00:00"
+  } ],
+  "created_at" : "2000-01-23",
+  "id" : 0
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Plan">Plan</a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getReleases"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /projects/{projectId}/releases</code></pre></div>
+    <div class="method-summary">Get releases (<span class="nickname">getReleases</span>)</div>
+    <div class="method-notes">This operation returns a list with the Releases in a given Project.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Release">Release</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "starts_at" : "2000-01-23T04:56:07.000+00:00",
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "resources" : [ {
+    "skills" : [ {
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 5
+    } ],
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 6,
+    "availability" : 1.46581298050294517310021547018550336360931396484375
+  } ],
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    An array of releases
+        
+    <h4 class="field-label">404</h4>
+    Project not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="modifyRelease"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /projects/{projectId}/releases/{releaseId}</code></pre></div>
+    <div class="method-summary">Modify a given release (<span class="nickname">modifyRelease</span>)</div>
+    <div class="method-notes">This operation allows modifying a given Release providing new values for the following parameters: name, description and deadline</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#ReleaseData">ReleaseData</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Release parameters that can be modified </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Release">Release</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "starts_at" : "2000-01-23T04:56:07.000+00:00",
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "resources" : [ {
+    "skills" : [ {
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 5
+    } ],
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 6,
+    "availability" : 1.46581298050294517310021547018550336360931396484375
+  } ],
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Release">Release</a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="notifyCompletedJobs"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /projects/{projectId}/releases/{releaseId}/plan</code></pre></div>
+    <div class="method-summary">Communicates completed jobs (<span class="nickname">notifyCompletedJobs</span>)</div>
+    <div class="method-notes">This operation communicates plan's jobs that has been completed</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#CompletedJob">CompletedJob</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Array of {job_id, compteted_at} </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Plan">Plan</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "release_id" : 6,
+  "resource_usage" : [ {
+    "total_used_hours" : 1.231513536777255612975068288506008684635162353515625,
+    "resource_id" : 4,
+    "resource_name" : "aeiou",
+    "total_available_hours" : 7.3862819483858839220147274318151175975799560546875
+  } ],
+  "jobs" : [ {
+    "depends_on" : [ "" ],
+    "feature" : {
+      "code" : 9,
+      "depends_on" : [ "" ],
+      "required_skills" : [ "" ],
+      "name" : "aeiou",
+      "jira_url" : "http://example.com/aeiou",
+      "description" : "aeiou",
+      "effort" : 3.61607674925191080461672754609026014804840087890625,
+      "id" : 7,
+      "deadline" : "2000-01-23T04:56:07.000+00:00",
+      "priority" : 2
+    },
+    "resource" : {
+      "skills" : [ {
+        "name" : "aeiou",
+        "description" : "aeiou",
+        "id" : 2
+      } ],
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 5,
+      "availability" : 5.63737665663332876420099637471139430999755859375
+    },
+    "ends" : "2000-01-23T04:56:07.000+00:00",
+    "id" : 1,
+    "starts" : "2000-01-23T04:56:07.000+00:00"
+  } ],
+  "created_at" : "2000-01-23",
+  "id" : 0
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success. Returns a (probably new) Release Plan
+        <a href="#Plan">Plan</a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="removeFeaturesFromRelease"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /projects/{projectId}/releases/{releaseId}/features</code></pre></div>
+    <div class="method-summary">Remove features from a relese (<span class="nickname">removeFeaturesFromRelease</span>)</div>
+    <div class="method-notes">This operation allows removing features from a given Release by providing the Feature ids.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">featureId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; IDs of the features to remove format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Project|Release|Feauture not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Resources">Resources</a></h1>
+  <div class="method"><a name="addNewResourceToProject"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /projects/{projectId}/resources</code></pre></div>
+    <div class="method-summary">Add a new resource to the project (<span class="nickname">addNewResourceToProject</span>)</div>
+    <div class="method-notes">This operation allows defining a new Resource to be allocated to the given Project.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#ResourceData">ResourceData</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Resource parameters </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Resource">Resource</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 1
+  } ],
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "id" : 0,
+  "availability" : 6.02745618307040320615897144307382404804229736328125
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    A new Resource
+        <a href="#Resource">Resource</a>
+    <h4 class="field-label">404</h4>
+    Project not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="addResourcesToRelease"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /projects/{projectId}/releases/{releaseId}/resources</code></pre></div>
+    <div class="method-summary">Adds resources to a release (<span class="nickname">addResourcesToRelease</span>)</div>
+    <div class="method-notes">This operation allows assigning more resources to a given Release by providing a list with the Resource ids.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#ResourceId">ResourceId</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Array of Resource ids </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Release">Release</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "starts_at" : "2000-01-23T04:56:07.000+00:00",
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "resources" : [ {
+    "skills" : [ {
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 5
+    } ],
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 6,
+    "availability" : 1.46581298050294517310021547018550336360931396484375
+  } ],
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Release">Release</a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="addSkillsToResource"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /projects/{projectId}/resources/{resourceId}/skills</code></pre></div>
+    <div class="method-summary">Add skills to a resource (<span class="nickname">addSkillsToResource</span>)</div>
+    <div class="method-notes">This operation allows assigning more skills to a given Resource by providing a list of the Skill ids.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">resourceId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the resource format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#SkillId">SkillId</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Array of Skill ids </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Resource">Resource</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 1
+  } ],
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "id" : 0,
+  "availability" : 6.02745618307040320615897144307382404804229736328125
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Resource">Resource</a>
+    <h4 class="field-label">404</h4>
+    Project or Resource not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteResource"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /projects/{projectId}/resources/{resourceId}</code></pre></div>
+    <div class="method-summary">Remove a given Resource (<span class="nickname">deleteResource</span>)</div>
+    <div class="method-notes">This operation removes and deallocates a given Resource from the Project.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">resourceId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the resource format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Project or Resource not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteResourcesFromRelease"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /projects/{projectId}/releases/{releaseId}/resources</code></pre></div>
+    <div class="method-summary">Delete resources from a release (<span class="nickname">deleteResourcesFromRelease</span>)</div>
+    <div class="method-notes">This operation allows deallocating resources from a given Release by providing the ids of those resources.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">releaseId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">ResourceId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; IDs of the resources to remove format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Release">Release</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "starts_at" : "2000-01-23T04:56:07.000+00:00",
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "resources" : [ {
+    "skills" : [ {
+      "name" : "aeiou",
+      "description" : "aeiou",
+      "id" : 5
+    } ],
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 6,
+    "availability" : 1.46581298050294517310021547018550336360931396484375
+  } ],
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00"
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Release">Release</a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteSkillsFromResource"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /projects/{projectId}/resources/{resourceId}/skills</code></pre></div>
+    <div class="method-summary">Remove skills from a resource (<span class="nickname">deleteSkillsFromResource</span>)</div>
+    <div class="method-notes">This operation allows removing skills from a given Resource by providing the Skill ids.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">resourceId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the resource format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">skillId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; IDs of the skills to remove format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Resource">Resource</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 1
+  } ],
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "id" : 0,
+  "availability" : 6.02745618307040320615897144307382404804229736328125
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Resource">Resource</a>
+    <h4 class="field-label">404</h4>
+    Project or Resource not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getProjectResources"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /projects/{projectId}/resources</code></pre></div>
+    <div class="method-summary">Get project resources (<span class="nickname">getProjectResources</span>)</div>
+    <div class="method-notes">This operation returns a list of the resources allocated to a given Project.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Resource">Resource</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 1
+  } ],
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "id" : 0,
+  "availability" : 6.02745618307040320615897144307382404804229736328125
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    An array of resources
+        
+    <h4 class="field-label">404</h4>
+    Project not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="modifyResource"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /projects/{projectId}/resources/{resourceId}</code></pre></div>
+    <div class="method-summary">Modify a given Resource (<span class="nickname">modifyResource</span>)</div>
+    <div class="method-notes">This operation allows modifying the parameters of a given Resource, namely name, description, and availability.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">resourceId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the resource format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#ResourceData">ResourceData</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Resource parameters that can be modified </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Resource">Resource</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 1
+  } ],
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "id" : 0,
+  "availability" : 6.02745618307040320615897144307382404804229736328125
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Resource">Resource</a>
+    <h4 class="field-label">404</h4>
+    Project or Resource not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Skills">Skills</a></h1>
+  <div class="method"><a name="addNewSkillToProject"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /projects/{projectId}/skills</code></pre></div>
+    <div class="method-summary">Create a new Skill (<span class="nickname">addNewSkillToProject</span>)</div>
+    <div class="method-notes">This operation allows defining a new Skill in the context of the given Project.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#SkillData">SkillData</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Skill parameters </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Skill">Skill</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "id" : 0
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    A new Skill
+        <a href="#Skill">Skill</a>
+    <h4 class="field-label">404</h4>
+    Project not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="addSkillsToFeature"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /projects/{projectId}/features/{featureId}/skills</code></pre></div>
+    <div class="method-summary">Adds required skills to a feature (<span class="nickname">addSkillsToFeature</span>)</div>
+    <div class="method-notes">This operation allows adding more required skills to a given Feature by providing a list of the Skill ids.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">featureId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#SkillId">SkillId</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Array of Skill ids </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Feature">Feature</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "code" : 6,
+  "depends_on" : [ "" ],
+  "required_skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 5
+  } ],
+  "name" : "aeiou",
+  "jira_url" : "http://example.com/aeiou",
+  "description" : "aeiou",
+  "effort" : 1.46581298050294517310021547018550336360931396484375,
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00",
+  "priority" : 5
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Feature">Feature</a>
+    <h4 class="field-label">404</h4>
+    Project or Feature not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="addSkillsToResource"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /projects/{projectId}/resources/{resourceId}/skills</code></pre></div>
+    <div class="method-summary">Add skills to a resource (<span class="nickname">addSkillsToResource</span>)</div>
+    <div class="method-notes">This operation allows assigning more skills to a given Resource by providing a list of the Skill ids.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">resourceId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the resource format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#SkillId">SkillId</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Array of Skill ids </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Resource">Resource</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 1
+  } ],
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "id" : 0,
+  "availability" : 6.02745618307040320615897144307382404804229736328125
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Resource">Resource</a>
+    <h4 class="field-label">404</h4>
+    Project or Resource not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteSkill"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /projects/{projectId}/skills/{skillId}</code></pre></div>
+    <div class="method-summary">Remove a given Skill (<span class="nickname">deleteSkill</span>)</div>
+    <div class="method-notes">This operation allows removing a given Skill from the Project settings.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">skillId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Project or Skill not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteSkillsFromFeature"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /projects/{projectId}/features/{featureId}/skills</code></pre></div>
+    <div class="method-summary">Delete required skills from a feature (<span class="nickname">deleteSkillsFromFeature</span>)</div>
+    <div class="method-notes">This operation allows deleting required skills from a given Feature by providing the Skill ids.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">featureId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the realese format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">skill_id (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; IDs of the skills to remove format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Feature">Feature</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "code" : 6,
+  "depends_on" : [ "" ],
+  "required_skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 5
+  } ],
+  "name" : "aeiou",
+  "jira_url" : "http://example.com/aeiou",
+  "description" : "aeiou",
+  "effort" : 1.46581298050294517310021547018550336360931396484375,
+  "id" : 0,
+  "deadline" : "2000-01-23T04:56:07.000+00:00",
+  "priority" : 5
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Feature">Feature</a>
+    <h4 class="field-label">404</h4>
+    Project or Release not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="deleteSkillsFromResource"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /projects/{projectId}/resources/{resourceId}/skills</code></pre></div>
+    <div class="method-summary">Remove skills from a resource (<span class="nickname">deleteSkillsFromResource</span>)</div>
+    <div class="method-notes">This operation allows removing skills from a given Resource by providing the Skill ids.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">resourceId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the resource format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">skillId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; IDs of the skills to remove format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Resource">Resource</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "skills" : [ {
+    "name" : "aeiou",
+    "description" : "aeiou",
+    "id" : 1
+  } ],
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "id" : 0,
+  "availability" : 6.02745618307040320615897144307382404804229736328125
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#Resource">Resource</a>
+    <h4 class="field-label">404</h4>
+    Project or Resource not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getProjectSkills"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /projects/{projectId}/skills</code></pre></div>
+    <div class="method-summary">Get project skills (<span class="nickname">getProjectSkills</span>)</div>
+    <div class="method-notes">This operation retrieves a list of the possible skills required in the given Project.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Skill">Skill</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "name" : "aeiou",
+  "description" : "aeiou",
+  "id" : 0
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    An array of skills
+        
+    <h4 class="field-label">404</h4>
+    Project not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="modifySkill"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /projects/{projectId}/skills/{skillId}</code></pre></div>
+    <div class="method-summary">Modify a given Skill (<span class="nickname">modifySkill</span>)</div>
+    <div class="method-notes">This operation allows modifying the parameters of a given Skill, namely name and description.</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">projectId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project (e.g. &quot;1&quot; or &quot;siemens&quot;) </div><div class="param">skillId (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the project format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">body <a href="#SkillData">SkillData</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; Skill parameters that can be modified </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Success
+        <a href="#"></a>
+    <h4 class="field-label">404</h4>
+    Project or Skill not found
+        <a href="#"></a>
+    <h4 class="field-label">422</h4>
+    Unprocessable Entity
+        <a href="#Error">Error</a>
+  </div> <!-- method -->
+  <hr/>
+
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#CompletedJob"><code>CompletedJob</code> - </a></li>
+    <li><a href="#Error"><code>Error</code> - </a></li>
+    <li><a href="#Feature"><code>Feature</code> - </a></li>
+    <li><a href="#FeatureData"><code>FeatureData</code> - </a></li>
+    <li><a href="#FeatureId"><code>FeatureId</code> - </a></li>
+    <li><a href="#Job"><code>Job</code> - </a></li>
+    <li><a href="#NewFeatureData"><code>NewFeatureData</code> - </a></li>
+    <li><a href="#NewProjectData"><code>NewProjectData</code> - </a></li>
+    <li><a href="#NewRelease"><code>NewRelease</code> - </a></li>
+    <li><a href="#Plan"><code>Plan</code> - </a></li>
+    <li><a href="#Plan_resource_usage"><code>Plan_resource_usage</code> - </a></li>
+    <li><a href="#Project"><code>Project</code> - </a></li>
+    <li><a href="#ProjectData"><code>ProjectData</code> - </a></li>
+    <li><a href="#Release"><code>Release</code> - </a></li>
+    <li><a href="#ReleaseData"><code>ReleaseData</code> - </a></li>
+    <li><a href="#Resource"><code>Resource</code> - </a></li>
+    <li><a href="#ResourceData"><code>ResourceData</code> - </a></li>
+    <li><a href="#ResourceId"><code>ResourceId</code> - </a></li>
+    <li><a href="#Skill"><code>Skill</code> - </a></li>
+    <li><a href="#SkillData"><code>SkillData</code> - </a></li>
+    <li><a href="#SkillId"><code>SkillId</code> - </a></li>
+  </ol>
+
+  <div class="model">
+    <h3><a name="CompletedJob"><code>CompletedJob</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">job_id </div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">completed_at </div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Error"><code>Error</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">code (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: int32</div>
+<div class="param">message (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">fields (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Feature"><code>Feature</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Unique identifier representing a feature </div>
+<div class="param">code (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Unique identifier from WP3.3 </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Display name of feature. </div>
+<div class="param">jira_url (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> URL of the feature in JIRA. format: url</div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Description of feature. </div>
+<div class="param">effort (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> Effort to implement the feature. </div>
+<div class="param">deadline (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">priority (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> It coms from Wp3.3 </div>
+<div class="param">required_skills (optional)</div><div class="param-desc"><span class="param-type"><a href="#Skill">array[Skill]</a></span>  </div>
+<div class="param">depends_on (optional)</div><div class="param-desc"><span class="param-type"><a href="#Feature">array[Feature]</a></span> array of features </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="FeatureData"><code>FeatureData</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Display name of feature. </div>
+<div class="param">jira_url (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> URL of the feature in JIRA. format: url</div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Description of feature. </div>
+<div class="param">effort (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> Effort to implement the feature. </div>
+<div class="param">deadline (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">priority (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> It coms from Wp3.3 </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="FeatureId"><code>FeatureId</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">feature_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Unique identifier representing a feature </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Job"><code>Job</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">starts (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">ends (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">resource (optional)</div><div class="param-desc"><span class="param-type"><a href="#Resource">Resource</a></span>  </div>
+<div class="param">feature (optional)</div><div class="param-desc"><span class="param-type"><a href="#Feature">Feature</a></span>  </div>
+<div class="param">depends_on (optional)</div><div class="param-desc"><span class="param-type"><a href="#Job">array[Job]</a></span> array of jobs </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="NewFeatureData"><code>NewFeatureData</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">code (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Unique identifier from WP3.3 </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Display name of feature. </div>
+<div class="param">jira_url (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> URL of the feature in JIRA. format: url</div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Description of feature. </div>
+<div class="param">effort (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span> Effort to implement the feature. </div>
+<div class="param">deadline (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">priority (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> It coms from Wp3.3 </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="NewProjectData"><code>NewProjectData</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Display name of project. </div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">effort_unit (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> e.g. &quot;bin&quot; </div>
+<div class="param">hours_per_effort_unit (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
+<div class="param">hours_per_week_and_full_time_resource (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="NewRelease"><code>NewRelease</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Display name of release. </div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">starts_at </div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">deadline </div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Plan"><code>Plan</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">created_at (optional)</div><div class="param-desc"><span class="param-type"><a href="#date">date</a></span>  format: date</div>
+<div class="param">release_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">jobs (optional)</div><div class="param-desc"><span class="param-type"><a href="#Job">array[Job]</a></span> array of jobs </div>
+<div class="param">resource_usage (optional)</div><div class="param-desc"><span class="param-type"><a href="#Plan_resource_usage">array[Plan_resource_usage]</a></span> usage of each release resource </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Plan_resource_usage"><code>Plan_resource_usage</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">resource_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">resource_name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">total_available_hours (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
+<div class="param">total_used_hours (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Project"><code>Project</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Display name of project. </div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">effort_unit (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> e.g. &quot;bin&quot; </div>
+<div class="param">hours_per_effort_unit (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
+<div class="param">hours_per_week_and_full_time_resource (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
+<div class="param">resources (optional)</div><div class="param-desc"><span class="param-type"><a href="#Resource">array[Resource]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ProjectData"><code>ProjectData</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">effort_unit (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> e.g. &quot;bin&quot; </div>
+<div class="param">hours_per_effort_unit (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
+<div class="param">hours_per_week_and_full_time_resource (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Release"><code>Release</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Display name of release. </div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">starts_at (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">deadline (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">resources (optional)</div><div class="param-desc"><span class="param-type"><a href="#Resource">array[Resource]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ReleaseData"><code>ReleaseData</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Display name of release. </div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">starts_at (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+<div class="param">deadline (optional)</div><div class="param-desc"><span class="param-type"><a href="#DateTime">Date</a></span>  format: date-time</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Resource"><code>Resource</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Display name of resource. </div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">availability (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
+<div class="param">skills (optional)</div><div class="param-desc"><span class="param-type"><a href="#Skill">array[Skill]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ResourceData"><code>ResourceData</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Display name of resource. </div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">availability (optional)</div><div class="param-desc"><span class="param-type"><a href="#number">BigDecimal</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ResourceId"><code>ResourceId</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">resource_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Unique identifier representing a resource </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Skill"><code>Skill</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Display name of skill. </div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="SkillData"><code>SkillData</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Display name of skill. </div>
+<div class="param">description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="SkillId"><code>SkillId</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">skill_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Unique identifier representing a skill </div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>

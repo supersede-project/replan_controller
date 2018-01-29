@@ -1,8 +1,8 @@
 require 'uri'
 require 'net/http'
 
-(895..1504).to_a.each do |skillId|
-    url = URI("http://supersede.es.atos.net:8280/replan/projects/siemens/skills/#{skillId}")
+(1335..2157).to_a.each do |rID|
+    url = URI("http://supersede.es.atos.net:8280/replan/projects/siemens/resources/#{rID}")
     
     http = Net::HTTP.new(url.host, url.port)
     

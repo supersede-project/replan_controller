@@ -7,7 +7,7 @@ The following steps describe the installation procedure for the Replan controlle
 
 ### Installation instructions
 1. Install Ruby on Rails (in some cases, you will also need to install Ruby).
- * `gem install rails -v 5.0.0`
+ * `gem install rails -v 5.1.4`
 2. Clone the SUPERSEDE Replan Git repository.
  * `git clone https://github.com/supersede-project/replan_controller`
 3. Install the component.

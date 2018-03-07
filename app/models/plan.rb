@@ -32,8 +32,8 @@ class Plan < ApplicationRecord
   
   def cancel
     unless self.prev_plan.nil? 
-      self.prev_plan.release = self.release
-      self.prev_plan.save
+      self.prev_plan.update_column(:release_id, self.release_id)
+      self.update_column(:plan_id, nil)
     end
     self.destroy
   end

@@ -1,8 +1,8 @@
 
 
-endpoint = "http://replan-api.herokuapp.com/replan"
-#endpoint = "http://platform.supersede.eu:8280/replan"
-#endpoint = "http://supersede.es.atos.net:8280/replan"
+#endpoint = "http://replan-api.herokuapp.com/replan"
+endpointP = "http://platform.supersede.eu:8280/replan"
+endpointD = "http://supersede.es.atos.net:8280/replan"
 
 skids = Hash.new
 rsids = Hash.new
@@ -12,7 +12,7 @@ rlids = Hash.new
 #[35].each do |i|   
 [1,2,3].each do |i|
 
-   #endpoint = "http://62.14.219.13:8280/replan" if i == 3
+   endpoint = i == 1 ? endpointP : endpointD
    
    ## Project
    pjson= JSON.parse(RestClient.get("#{endpoint}/projects/#{i}").body)
@@ -21,12 +21,14 @@ rlids = Hash.new
                      effort_unit: pjson["effort_unit"], hours_per_effort_unit: pjson["hours_per_effort_unit"], \
                      hours_per_week_and_full_time_resource: pjson["hours_per_week_and_full_time_resource"])
    
+   puts p.name
    ## Skills
    
    skills = JSON.parse(RestClient.get("#{endpoint}/projects/#{i}/skills").body)
    skills.each do |s|
       ns = p.skills.create(name: s["name"], description: s["description"])
       skids[s["id"]] = ns.id
+      puts ns.name
    end
    
    ## Resources
@@ -37,11 +39,14 @@ rlids = Hash.new
       r["skills"].each do |rs|
         nr.skills << Skill.find(skids[rs["id"]])
       end
+      puts nr.name
    end
    
    ## Features
    dependencies = Hash.new
-   features = JSON.parse(RestClient.get("#{endpoint}/projects/#{i}/features").body)
+   the_url = "#{endpoint}/projects/#{i}/features"
+   puts the_url
+   features = JSON.parse(RestClient.get(the_url).body)
    features.each do |f|
       nf = p.features.create(code: f["code"], name: f["name"], description: f["description"], \
                           deadline: f["deadline"], priority: f["priority"], \
@@ -55,6 +60,7 @@ rlids = Hash.new
         depi << d["id"]
       end
       dependencies[nf.id] = depi unless depi.empty? 
+      puts nf.name
    end
    
    dependencies.each do |key, value|
@@ -78,7 +84,7 @@ rlids = Hash.new
         nl.features << Feature.find(ftids[f["id"]])
       end
       nl.plan.destroy unless nl.plan.nil?
+      puts nl.name
       
    end
-   puts p.name
 end

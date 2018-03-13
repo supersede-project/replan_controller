@@ -65,5 +65,6 @@ Rails.application.routes.draw do
   add_ui_route 'DELETE', '/projects/{projectId}/features/{featureId}/skills', controller_name: 'features', action_name: 'delete_skills_from_feature'
   add_ui_route 'POST', '/projects/{projectId}/features/{featureId}/dependencies', controller_name: 'features', action_name: 'add_dependencies_to_feature'
   add_ui_route 'DELETE', '/projects/{projectId}/features/{featureId}/dependencies', controller_name: 'features', action_name: 'delete_dependencies_from_feature'
+  add_ui_route 'POST', '/projects/{projectId}/dayslots', controller_name: 'dayslots', action_name: 'add_new_dayslot_to_project'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

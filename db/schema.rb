@@ -12,6 +12,20 @@
 
 ActiveRecord::Schema.define(version: 20171017132802) do
 
+  create_table "dayslots", force: :cascade do |t|
+    t.integer "code"
+    t.integer "week"
+    t.integer "dayOfWeek"
+    t.decimal "beginHour"
+    t.decimal "endHour"
+    t.integer "feature_id"
+    t.integer "resource_id"
+    t.integer "project_id"
+    t.index ["feature_id"], name: "index_dayslots_on_feature_id"
+    t.index ["project_id"], name: "index_dayslots_on_project_id"
+    t.index ["resource_id"], name: "index_dayslots_on_resource_id"
+  end
+
   create_table "dependencies", id: false, force: :cascade do |t|
     t.integer "feature_id"
     t.integer "depending_id"

@@ -3,7 +3,8 @@ class ValentinPlanner
     
   MAX_TIME = 6 # seconds
   MAX_ITERATIONS = 5
-    
+
+    # Edit here to plan accordingly
   def self.plan(release)
     
     uris = Rails.application.config.x.optimizer_endpoints # as defined in config/initializers/optimizer_endpoints.rb
@@ -56,7 +57,8 @@ class ValentinPlanner
   end
   
   private
-  
+
+    # Edit to add new data
     def self.build_payload(release)
       project = release.project
       nrp = Hash.new

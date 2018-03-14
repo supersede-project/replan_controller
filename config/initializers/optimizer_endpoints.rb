@@ -3,4 +3,6 @@ uri_D2 = "http://supersede.es.atos.net:8280/replan_optimizer_v2/replan"
 uri_P1 = "http://platform.supersede.eu:8280/replan_optimizer/replan"
 uri_P2 = "http://platform.supersede.eu:8280/replan_optimizer_v2/replan"
 
-Rails.application.config.x.optimizer_endpoints = [uri_P1, uri_P2, uri_D1, uri_D2]
+local = "http://localhost:8080/replan_optimizer_v2-0.0.1/replan"
+
+Rails.application.config.x.optimizer_endpoints = [local]

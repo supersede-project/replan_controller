@@ -1,5 +1,5 @@
 class PlanSerializer < ActiveModel::Serializer
-  attributes :id, :created_at, :release_id, :num_features, :num_jobs, :jobs, :resource_usage
+  attributes :id, :created_at, :release_id, :num_features, :num_jobs, :resources, :resource_usage
   
   def num_features
     object.release.features.count
@@ -9,10 +9,13 @@ class PlanSerializer < ActiveModel::Serializer
     object.jobs.count
   end
   
-  def jobs
-    object
-      .jobs.joins(:resource).order('resources.name')
-      .map { |x| JobSerializer.new(x).as_json  }
+  def resources
+    object.release.resources.map { |r| {
+        "id" => r.id,
+        "name" => r.name,
+        "skills" => r.skills.map { |s| SkillSerializer.new(s)},
+        "calendar" => r.dayslots.map { |d| DayslotSerializer.new(d)}
+    }}
   end
   
   def resource_usage

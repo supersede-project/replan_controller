@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20171017132802) do
     t.integer "dayOfWeek"
     t.decimal "beginHour"
     t.decimal "endHour"
+    t.integer "slotStatus", default: 0
     t.integer "feature_id"
     t.integer "resource_id"
     t.integer "project_id"

@@ -65,6 +65,16 @@ Rails.application.routes.draw do
   add_ui_route 'DELETE', '/projects/{projectId}/features/{featureId}/skills', controller_name: 'features', action_name: 'delete_skills_from_feature'
   add_ui_route 'POST', '/projects/{projectId}/features/{featureId}/dependencies', controller_name: 'features', action_name: 'add_dependencies_to_feature'
   add_ui_route 'DELETE', '/projects/{projectId}/features/{featureId}/dependencies', controller_name: 'features', action_name: 'delete_dependencies_from_feature'
+
   add_ui_route 'POST', '/projects/{projectId}/dayslots', controller_name: 'dayslots', action_name: 'add_new_dayslot_to_project'
+  add_ui_route 'GET', '/projects/{projectId}/dayslots', controller_name: 'dayslots', action_name: 'get_dayslots'
+  add_ui_route 'GET', '/projects/{projectId}/dayslots/{dayslotId}', controller_name: 'dayslots', action_name: 'get_dayslot'
+  add_ui_route 'PUT', '/projects/{projectId}/dayslots/{dayslotId}', controller_name: 'dayslots', action_name: 'modify_dayslot'
+  add_ui_route 'DELETE', '/projects/{projectId}/dayslots/{dayslotId}', controller_name: 'dayslots', action_name: 'delete_dayslot'
+
+  add_ui_route 'POST', '/projects/{projectId}/resources/{resourceId}/dayslots', controller_name: 'resources', action_name: 'add_dayslots_to_resource'
+  add_ui_route 'DELETE', '/projects/{projectId}/resources/{resourceId}/dayslots', controller_name: 'resources', action_name: 'delete_dayslots_from_resource'
+  add_ui_route 'GET', '/projects/{projectId}/resources/{resourceId}/dayslots', controller_name: 'resources', action_name: 'get_dayslots_from_resource'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

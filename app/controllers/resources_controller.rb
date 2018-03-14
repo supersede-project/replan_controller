@@ -19,7 +19,8 @@ limitations under the License.
 
 =end
 class ResourcesController < ApplicationController
-  before_action :set_resource, only: [:delete_resource, :modify_resource,:add_skills_to_resource, :delete_skills_from_resource
+  before_action :set_resource, only: [:delete_resource, :modify_resource,:add_skills_to_resource, :delete_skills_from_resource,
+                                      :add_dayslots_to_resource, :delete_dayslots_from_resource, :get_dayslots_from_resource
   ]
 
   def add_new_resource_to_project
@@ -69,6 +70,28 @@ class ResourcesController < ApplicationController
           end
       end
     render json: @resource
+  end
+
+  def add_dayslots_to_resource
+    params[:_json].each do |d|
+      dayslot = @project.dayslots.find_by(id: d[:id])
+        if dayslot and not @resource.dayslots.exists?(id: d[:id])
+          @resource.dayslots << dayslot
+        end
+    end
+  end
+
+  def delete_dayslots_from_resource
+    params[:dayslotId].split(',').each do |i|
+      dayslot = @resource.dayslots.find_by(id: i)
+        if dayslot
+          @resource.dayslots.delete(dayslot)
+        end
+    end
+  end
+
+  def get_dayslots_from_resource
+    render json: @resource.dayslots
   end
 
   private

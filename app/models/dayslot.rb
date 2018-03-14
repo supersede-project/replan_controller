@@ -3,4 +3,7 @@ class Dayslot < ApplicationRecord
   has_one :resources
   has_one :feature
   validates :project_id, presence: true
+
+  enum status: [ :Free, :Used, :Frozen ]
+
 end

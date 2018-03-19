@@ -29,7 +29,9 @@ Rails.application.routes.draw do
   add_ui_route 'POST', '/projects/{projectId}/resources/{resourceId}/dayslots', controller_name: 'resources', action_name: 'add_dayslots_to_resource'
   add_ui_route 'DELETE', '/projects/{projectId}/resources/{resourceId}/dayslots', controller_name: 'resources', action_name: 'delete_dayslots_from_resource'
   add_ui_route 'GET', '/projects/{projectId}/resources/{resourceId}/dayslots', controller_name: 'resources', action_name: 'get_dayslots_from_resource'
-  
+
+  add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan-n', controller_name: 'releases', action_name: 'get_release_plan_n'
+
   # new methods in v.2.1
   add_ui_route 'PUT', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'notify_completed_jobs'
   

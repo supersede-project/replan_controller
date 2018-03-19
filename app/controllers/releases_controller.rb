@@ -51,11 +51,21 @@ class ReleasesController < ApplicationController
 
   def get_release_plan
     # Your code here
-    force_new = @release.plan.nil? ||
+    force_new = @release.plans.size == 0 ||
                 (!params[:force_new].nil? && (params[:force_new] == "true" ||
                                               params[:force_new] == "yes"))
     puts "Calling to: #{request.headers["Host"]}"
     @plan = Plan.get_plan(@release, force_new)
+    render json: @plan
+  end
+
+  def get_release_plan_n
+    # Your code here
+    force_new = @release.plans.size == 0 ||
+        (!params[:force_new].nil? && (params[:force_new] == "true" ||
+            params[:force_new] == "yes"))
+    puts "Calling to: #{request.headers["Host"]}"
+    @plan = Plan.get_plans(@release, force_new)
     render json: @plan
   end
 

@@ -6,3 +6,7 @@ uri_P2 = "http://platform.supersede.eu:8280/replan_optimizer_v2/replan"
 local = "http://localhost:8080/replan_optimizer_v2-0.0.1/replan"
 
 Rails.application.config.x.optimizer_endpoints = [local]
+
+localn = "http://localhost:8080/replan_optimizer_v2-0.0.1/replan-n"
+
+Rails.application.config.x.optimizer_n_endpoints = [localn]

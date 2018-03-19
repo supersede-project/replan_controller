@@ -2,7 +2,7 @@ class Release < ApplicationRecord
   belongs_to :project
   has_many :features, dependent: :nullify
   has_and_belongs_to_many :resources
-  has_many :plan, dependent: :destroy
+  has_many :plans, dependent: :destroy
   validates :project_id, presence: true
   validates :starts_at, presence: true
   validates :deadline, presence: true

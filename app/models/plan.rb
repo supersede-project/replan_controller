@@ -1,17 +1,24 @@
 class Plan < ApplicationRecord
   belongs_to :release, optional: true
   belongs_to :prev_plan, class_name: "Plan", foreign_key: "plan_id", optional: true, dependent: :destroy
-  has_many :schedules
+  has_many :schedules, dependent: :destroy
 
   def self.get_plan(release, force_new)
     if force_new
       if release.starts_at.nil?
         FakePlanner.plan(release)
       else
-        ValentinPlanner.plan(release)
+        ValentinPlanner.plan(release, Rails.application.config.x.optimizer_endpoints)
       end
     end
-    return release.plan
+    return release.plans
+  end
+
+  def self.get_plans(release, force_new)
+    if force_new
+      ValentinPlanner.plan(release, Rails.application.config.x.optimizer_n_endpoints)
+    end
+    return release.plans
   end
   
   #def self.replan(release)

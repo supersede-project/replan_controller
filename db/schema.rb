@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20180319095023) do
   end
 
   create_table "plans", force: :cascade do |t|
+    t.boolean "isCurrent"
     t.integer "release_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

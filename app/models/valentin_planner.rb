@@ -5,10 +5,8 @@ class ValentinPlanner
     MAX_ITERATIONS = 1
 
     # Edit here to plan accordingly
-    def self.plan(release)
-      
-      uris = Rails.application.config.x.optimizer_endpoints # as defined in config/initializers/optimizer_endpoints.rb
-      
+    def self.plan(release, uris)
+
       payload = self.build_payload(release)
       Rails.logger.info "\nCalling replan_optimizer with payload = #{payload}\n"
       response = "";
@@ -16,23 +14,22 @@ class ValentinPlanner
       ftime = 0
       mutex = Mutex.new
       threads = []
+      Rails.logger.info "::plan #{uris}"
       uris.each do |uri|
         Rails.logger.info "::plan Calling to #{uri}"
         threads << Thread.new do
           ttime = 0
-          resourceArray = Array.new
           time = Benchmark.realtime do
             begin
               response = RestClient::Request.execute(method: :post, url: uri, payload: payload,  timeout: MAX_TIME, headers: {content_type: :json, accept: :json})
-              #response = RestClient.post uri, payload,  {content_type: :json, accept: :json}
-              resourceArray = JSON.parse(response.body)["employees"]
+              Rails.logger.info "::plan response #{response}"
+              sol = JSON.parse(response.body)
               rescue RestClient::Exceptions::ReadTimeout
               rescue RestClient::Exceptions::OpenTimeout
               rescue RestClient::InternalServerError
               rescue Errno::ECONNREFUSED
             end
           end
-          sol = resourceArray
           mutex.synchronize do
             ftime += ttime
           end
@@ -83,23 +80,19 @@ class ValentinPlanner
     end
     
     
-    def self.build_plan(release, resources)
+    def self.build_plan(release, sol)
 
-      plan = Plan.replan(release, resources)
+      release.plans.destroy_all
+
+      begin
+        Plan.replan(release, sol["employees"])
+      rescue TypeError
+        #array result
+        sol.each do |res|
+          Plan.replan(release, res["employees"])
+        end
+      end
 
 
-      #resources.each do |r|
-      #  r["calendar"].each do |d|
-      #    Rails.logger.info "::plan New DaySlot#{d}"
-      #  end
-        #dayslots.each do |d|
-        #  Rails.logger.info "::plan #{r.as_json}"
-        #  new_dayslot = r["calendar"].where(:code => d.code)
-        #  Rails.logger.info "::plan #{new_dayslot}\n"
-        #  d.update(new_dayslot.to_param)
-        #  Rails.logger.info "::plan Updated slot #{Dayslot.where(:id => d.id)}\n"
-        #end
-        #
-      #end
     end
 end

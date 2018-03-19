@@ -1,4 +1,4 @@
 class DayslotSerializer < ActiveModel::Serializer
-  attributes :id, :code, :week, :dayOfWeek, :beginHour, :endHour, :slotStatus
+  attributes :id, :week, :dayOfWeek, :beginHour, :endHour
 
 end

@@ -1,60 +1,47 @@
 class ValentinPlanner
     include ActiveModel::Model
     
-  MAX_TIME = 6 # seconds
-  MAX_ITERATIONS = 5
+    MAX_TIME = 15 # seconds
+    MAX_ITERATIONS = 1
 
     # Edit here to plan accordingly
-  def self.plan(release)
-    
-    uris = Rails.application.config.x.optimizer_endpoints # as defined in config/initializers/optimizer_endpoints.rb
-    
-    payload = self.build_payload(release)
-    puts "\nCalling replan_optimizer with payload = #{payload}\n"
-    numFeatures = release.features.count
-    numJobs = 0
-    response = "";
-    sol = Array.new
-    ftime = 0
-    mutex = Mutex.new
-    threads = []
-    uris.each do |uri|
-      threads << Thread.new do
-        ttime = 0
-        it = 0
-        until it == MAX_ITERATIONS || ttime > MAX_TIME || numJobs == numFeatures
-          jobArray = Array.new
+    def self.plan(release)
+      
+      uris = Rails.application.config.x.optimizer_endpoints # as defined in config/initializers/optimizer_endpoints.rb
+      
+      payload = self.build_payload(release)
+      Rails.logger.info "\nCalling replan_optimizer with payload = #{payload}\n"
+      response = "";
+      sol = Array.new
+      ftime = 0
+      mutex = Mutex.new
+      threads = []
+      uris.each do |uri|
+        Rails.logger.info "::plan Calling to #{uri}"
+        threads << Thread.new do
+          ttime = 0
+          resourceArray = Array.new
           time = Benchmark.realtime do
             begin
               response = RestClient::Request.execute(method: :post, url: uri, payload: payload,  timeout: MAX_TIME, headers: {content_type: :json, accept: :json})
               #response = RestClient.post uri, payload,  {content_type: :json, accept: :json}
-              jobArray = JSON.parse(response.body)["jobs"]
-            rescue RestClient::Exceptions::ReadTimeout
-            rescue RestClient::Exceptions::OpenTimeout
-            rescue RestClient::InternalServerError
-            rescue Errno::ECONNREFUSED
+              resourceArray = JSON.parse(response.body)["employees"]
+              rescue RestClient::Exceptions::ReadTimeout
+              rescue RestClient::Exceptions::OpenTimeout
+              rescue RestClient::InternalServerError
+              rescue Errno::ECONNREFUSED
             end
           end
-          jobCount = jobArray.count
-          puts "#{it+1}# #{uri} -> Num jobs/Num features: #{jobCount}/#{numFeatures} in #{time} seconds"
+          sol = resourceArray
           mutex.synchronize do
-            if numJobs < jobCount
-              sol = jobArray
-              numJobs = jobCount
-            end
+            ftime += ttime
           end
-          it += 1
-          ttime += time
-        end
-        mutex.synchronize do
-          ftime += ttime
         end
       end
+      threads.map(&:join)
+      #puts "FINAL -> Num jobs/Num features: #{numJobs}/#{numFeatures} in #{ftime} seconds"
+      self.build_plan(release, sol)
     end
-    threads.map(&:join)
-    puts "FINAL -> Num jobs/Num features: #{numJobs}/#{numFeatures} in #{ftime} seconds"
-    self.build_plan(release, sol)
-  end
   
   private
 
@@ -62,13 +49,19 @@ class ValentinPlanner
     def self.build_payload(release)
       project = release.project
       nrp = Hash.new
-      nrp[:nbWeeks] = release.num_weeks
-      nrp[:hoursPerWeek] = project.hours_per_week_and_full_time_resource
       nrp[:features] = release.features.map {|f| self.build_feature(f) }
       nrp[:resources] = release.resources.map do |r|
         { name: r.id.to_s, 
-          availability: r.available_hours_per_week,
-          skills: r.skills.map {|s| {name: s.id.to_s} } }
+          skills: r.skills.map {|s| {name: s.id.to_s} },
+          calendar: r.dayslots.map {|d| {id: d.id,
+                                         week: d.week,
+                                         dayOfWeek: d.dayOfWeek,
+                                         beginHour: d.beginHour,
+                                         endHour: d.endHour,
+                                         status: "Free"
+          }
+          }
+        }
       end
       nrp.to_json
     end
@@ -90,14 +83,23 @@ class ValentinPlanner
     end
     
     
-    def self.build_plan(release, vjobs)
-      plan = Plan.replan(release)
-      vjobs.each do |j|
-        Job.create(starts: j["beginHour"].to_i.business_hours.after(release.starts_at), 
-                   ends: j["endHour"].to_i.business_hours.after(release.starts_at),
-                   feature: Feature.find(j["feature"]["name"]), 
-                   resource: Resource.find(j["resource"]["name"]),
-                   plan: plan)
-      end
+    def self.build_plan(release, resources)
+
+      plan = Plan.replan(release, resources)
+
+
+      #resources.each do |r|
+      #  r["calendar"].each do |d|
+      #    Rails.logger.info "::plan New DaySlot#{d}"
+      #  end
+        #dayslots.each do |d|
+        #  Rails.logger.info "::plan #{r.as_json}"
+        #  new_dayslot = r["calendar"].where(:code => d.code)
+        #  Rails.logger.info "::plan #{new_dayslot}\n"
+        #  d.update(new_dayslot.to_param)
+        #  Rails.logger.info "::plan Updated slot #{Dayslot.where(:id => d.id)}\n"
+        #end
+        #
+      #end
     end
 end

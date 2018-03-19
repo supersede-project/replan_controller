@@ -10,19 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171017132802) do
+ActiveRecord::Schema.define(version: 20180319095023) do
 
   create_table "dayslots", force: :cascade do |t|
-    t.integer "code"
     t.integer "week"
     t.integer "dayOfWeek"
     t.decimal "beginHour"
     t.decimal "endHour"
-    t.integer "slotStatus", default: 0
-    t.integer "feature_id"
     t.integer "resource_id"
     t.integer "project_id"
-    t.index ["feature_id"], name: "index_dayslots_on_feature_id"
     t.index ["project_id"], name: "index_dayslots_on_project_id"
     t.index ["resource_id"], name: "index_dayslots_on_resource_id"
   end
@@ -118,6 +114,20 @@ ActiveRecord::Schema.define(version: 20171017132802) do
   create_table "resources_skills", id: false, force: :cascade do |t|
     t.integer "skill_id", null: false
     t.integer "resource_id", null: false
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.integer "week"
+    t.integer "dayOfWeek"
+    t.decimal "beginHour"
+    t.decimal "endHour"
+    t.integer "status"
+    t.integer "resource_id"
+    t.integer "feature_id"
+    t.integer "plan_id"
+    t.index ["feature_id"], name: "index_schedules_on_feature_id"
+    t.index ["plan_id"], name: "index_schedules_on_plan_id"
+    t.index ["resource_id"], name: "index_schedules_on_resource_id"
   end
 
   create_table "skills", force: :cascade do |t|

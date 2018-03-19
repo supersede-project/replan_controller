@@ -35,7 +35,7 @@ class DayslotsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
     def dayslot_params
-      params.require(:dayslot).permit(:code, :week, :dayOfWeek, :beginHour, :endHour, :slotStatus)
+      params.require(:dayslot).permit(:id, :week, :dayOfWeek, :beginHour, :endHour)
     end
 
     def set_dayslot

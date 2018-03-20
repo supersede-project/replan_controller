@@ -70,7 +70,32 @@ class ValentinPlanner
           }
         }
       end
+
+      nrp[:resources].each do |r|
+        if r[:calendar] == nil || r[:calendar].count.zero?
+          r[:calendar] = generate_dayslots(release, Resource.where(id: r[:name]).first())
+        end
+      end
+
       nrp.to_json
+    end
+
+    def self.generate_dayslots(release, r)
+      dayslots = []
+      nbWeeks = release.num_weeks
+      availability = r.availability
+      nbWeeks.times do |i|
+        5.times do |n|
+          dayslots << {id: (i)*5 + (n+1),
+                       week: i+1,
+                       dayOfWeek: (n+1)%6,
+                       beginHour: 8.0,
+                       endHour: 8.0 + availability / 100 * 8.0,
+                       status: "Free"
+          }
+        end
+      end
+      return dayslots
     end
 
     def self.build_replan_payload(plan)

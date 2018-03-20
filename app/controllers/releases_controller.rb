@@ -56,6 +56,7 @@ class ReleasesController < ApplicationController
                                               params[:force_new] == "yes"))
     multiple_solutions = !params[:multiple_solutions].nil? && (params[:multiple_solutions] == "true" ||
         params[:multiple_solutions] == "yes")
+
     puts "Calling to: #{request.headers["Host"]}"
     @plan = Plan.get_plan(@release, force_new, multiple_solutions)
     render json: @plan

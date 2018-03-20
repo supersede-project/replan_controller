@@ -3,24 +3,27 @@ class Plan < ApplicationRecord
   belongs_to :prev_plan, class_name: "Plan", foreign_key: "plan_id", optional: true, dependent: :destroy
   has_many :schedules, dependent: :destroy
 
-  def self.get_plan(release, force_new)
+  def self.get_plan(release, force_new, multiple_solutions)
     if force_new
       if release.starts_at.nil?
         FakePlanner.plan(release)
       else
-        ValentinPlanner.plan(release, Rails.application.config.x.optimizer_endpoints)
+        if multiple_solutions
+          ValentinPlanner.plan(release, Rails.application.config.x.optimizer_n_endpoints)
+        else
+          ValentinPlanner.plan(release, Rails.application.config.x.optimizer_endpoints)
+        end
+        return release.plans
+      end
+    else
+      if multiple_solutions
+        return release.plans
+      else
+        return release.plans.where(isCurrent: true)
       end
     end
-    return release.plans
   end
 
-  def self.get_plans(release, force_new)
-    if force_new
-      ValentinPlanner.plan(release, Rails.application.config.x.optimizer_n_endpoints)
-    end
-    return release.plans
-  end
-  
   #def self.replan(release)
   #  pplan = release.plan
   #  plan = Plan.new(release: release)
@@ -37,13 +40,11 @@ class Plan < ApplicationRecord
     plan = Plan.new(release: release)
     plan.save
 
-    #TODO add schedules
     resources.each do |r|
       r["calendar"].each do |d|
         s = Schedule.new(week: d["week"], dayOfWeek: d["dayOfWeek"], beginHour: d["beginHour"], endHour: d["endHour"],
-                     status: if d["status"] = "Free" then 0 elsif d["status"] = "Used" then 1 else 2 end, feature_id: d["featureId"], resource_id: r["name"])
+                     status: if d["status"] == "Free" then 0 elsif d["status"] == "Used" then 1 else 2 end, feature_id: d["featureId"], resource_id: r["name"])
         plan.schedules << s
-        Rails.logger.info "::plan \t Schedule #{s.as_json} added to plan #{plan.as_json}"
       end
     end
 

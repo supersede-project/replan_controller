@@ -20,6 +20,18 @@ Rails.application.routes.draw do
   end
 
   # new methods
+  #add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan/{planId}/replan', controller_name: 'plan', action_name: 'replan'
+  #add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan-n/{planId}/replan', controller_name: 'plan', action_name: 'replan_n'
+  #add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan-n', controller_name: 'releases', action_name: 'get_release_plan_n'
+
+  add_ui_route 'PUT', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'notify_completed_jobs'
+  add_ui_route 'DELETE', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'cancel_last_release_plan'
+
+  add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'get_release_plan'
+  add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan/{planId}/replan', controller_name: 'plan', action_name: 'replan'
+
+
+
   add_ui_route 'POST', '/projects/{projectId}/dayslots', controller_name: 'dayslots', action_name: 'add_new_dayslot_to_project'
   add_ui_route 'GET', '/projects/{projectId}/dayslots', controller_name: 'dayslots', action_name: 'get_dayslots'
   add_ui_route 'GET', '/projects/{projectId}/dayslots/{dayslotId}', controller_name: 'dayslots', action_name: 'get_dayslot'
@@ -30,11 +42,6 @@ Rails.application.routes.draw do
   add_ui_route 'DELETE', '/projects/{projectId}/resources/{resourceId}/dayslots', controller_name: 'resources', action_name: 'delete_dayslots_from_resource'
   add_ui_route 'GET', '/projects/{projectId}/resources/{resourceId}/dayslots', controller_name: 'resources', action_name: 'get_dayslots_from_resource'
 
-  add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan-n', controller_name: 'releases', action_name: 'get_release_plan_n'
-
-  # new methods in v.2.1
-  add_ui_route 'PUT', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'notify_completed_jobs'
-  
   # new methods in v.2
   add_ui_route 'GET', '/projects', controller_name: 'project', action_name: 'get_projects'
   add_ui_route 'POST', '/projects', controller_name: 'project', action_name: 'create_project'
@@ -54,10 +61,8 @@ Rails.application.routes.draw do
   add_ui_route 'PUT', '/projects/{projectId}', controller_name: 'project', action_name: 'modify_project'
   add_ui_route 'POST', '/projects/{projectId}/releases/{releaseId}/features', controller_name: 'releases', action_name: 'add_feature_to_release'
   add_ui_route 'POST', '/projects/{projectId}/releases', controller_name: 'releases', action_name: 'add_new_release_to_project'
-  add_ui_route 'DELETE', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'cancel_last_release_plan'
   add_ui_route 'DELETE', '/projects/{projectId}/releases/{releaseId}', controller_name: 'releases', action_name: 'delete_release'
   add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/features', controller_name: 'releases', action_name: 'get_release_features'
-  add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'get_release_plan'
   add_ui_route 'GET', '/projects/{projectId}/releases', controller_name: 'releases', action_name: 'get_releases'
   add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}', controller_name: 'releases', action_name: 'get_release'
   add_ui_route 'PUT', '/projects/{projectId}/releases/{releaseId}', controller_name: 'releases', action_name: 'modify_release'

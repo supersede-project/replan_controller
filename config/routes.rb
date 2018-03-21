@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   add_ui_route 'DELETE', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'cancel_last_release_plan'
 
   add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'get_release_plan'
-  add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan/{planId}/replan', controller_name: 'plan', action_name: 'replan'
+  add_ui_route 'POST', '/projects/{projectId}/releases/{releaseId}/plan/{planId}/replan', controller_name: 'plan', action_name: 'replan'
 
 
 

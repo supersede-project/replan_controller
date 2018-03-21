@@ -4,9 +4,9 @@ class ValentinPlanner
     MAX_TIME = 15 # seconds
     MAX_ITERATIONS = 1
 
-    def self.replan(plan, uris)
+    def self.replan(plan, week, dayOfWeek, beginHour, uris)
       release = plan.release
-      payload = build_replan_payload(plan)
+      payload = build_replan_payload(plan, week, dayOfWeek, beginHour, )
       sol = call(payload, uris)
       self.build_plan(release, sol)
       return release
@@ -98,7 +98,7 @@ class ValentinPlanner
       return dayslots
     end
 
-    def self.build_replan_payload(plan)
+    def self.build_replan_payload(plan, week, dayOfWeek, beginHour)
       ## filter schedules plan by resource
       release = plan.release
       nrp = Hash.new
@@ -117,6 +117,7 @@ class ValentinPlanner
           }
         }
       end
+      nrp[:replanTime] = {week: week, dayOfWeek: dayOfWeek, beginHour: beginHour}
       nrp.to_json
     end
     

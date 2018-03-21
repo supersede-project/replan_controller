@@ -20,7 +20,15 @@ class PlanSerializer < ActiveModel::Serializer
   end
 
   def calendar
-    object.schedules.map { |s| ScheduleSerializer.new(s)}
+    object.schedules.map { |s| {
+        "id" => s.id,
+        "begins" => get_time(object, s.week, s.dayOfWeek, s.beginHour),
+        "ends" => get_time(object, s.week, s.dayOfWeek, s.endHour),
+        "slotStatus" => if s.status == 0 then "Free" elsif s.status == 1 then "Used" else "Frozen" end,
+        "feature_id" => s.feature_id,
+        "resource_id" => s.resource_id
+      }
+    }
   end
   
   def resource_usage
@@ -34,4 +42,12 @@ class PlanSerializer < ActiveModel::Serializer
                   "skills" => r.skills.map { |x| SkillSerializer.new(x) }}
       }.as_json
   end
+
+  private
+
+  def get_time(plan, week, dayOfWeek, hour)
+    date = plan.release.starts_at + (hour).hours + (dayOfWeek-1).days + (week-1).weeks
+    return date
+  end
+
 end

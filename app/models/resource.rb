@@ -2,7 +2,7 @@ class Resource < ApplicationRecord
   belongs_to :project
   has_and_belongs_to_many :releases
   has_and_belongs_to_many :skills
-  has_many :dayslots
+  has_and_belongs_to_many :dayslots
   validates :project_id, presence: true
   
   def available_hours_per_week

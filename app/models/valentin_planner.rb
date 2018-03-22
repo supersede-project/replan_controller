@@ -148,6 +148,10 @@ class ValentinPlanner
         Rails.logger.info "::plan Creating plan"
         plan = Plan.replan(release, sol["employees"])
         plan.isCurrent = true
+        plan.priorityQuality = sol["priorityQuality"]
+        plan.performanceQuality = sol["performanceQuality"]
+        plan.similarityQuality = sol["similarityQuality"]
+        plan.globalQuality = sol["globalQuality"]
         release.plans << plan
       rescue TypeError
         #array result
@@ -156,6 +160,10 @@ class ValentinPlanner
           Rails.logger.info "::plan Creating plan-n"
           plan = Plan.replan(release, res["employees"])
           plan.isCurrent = isCurrent
+          plan.priorityQuality = res["priorityQuality"]
+          plan.performanceQuality = res["performanceQuality"]
+          plan.similarityQuality = res["similarityQuality"]
+          plan.globalQuality = res["globalQuality"]
           if (isCurrent == true)
             isCurrent = false
           end

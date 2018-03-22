@@ -10,17 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180319095023) do
+ActiveRecord::Schema.define(version: 20180322115225) do
 
   create_table "dayslots", force: :cascade do |t|
     t.integer "week"
     t.integer "dayOfWeek"
     t.decimal "beginHour"
     t.decimal "endHour"
-    t.integer "resource_id"
     t.integer "project_id"
     t.index ["project_id"], name: "index_dayslots_on_project_id"
-    t.index ["resource_id"], name: "index_dayslots_on_resource_id"
+  end
+
+  create_table "dayslots_resources", id: false, force: :cascade do |t|
+    t.integer "dayslot_id", null: false
+    t.integer "resource_id", null: false
   end
 
   create_table "dependencies", id: false, force: :cascade do |t|
@@ -66,6 +69,10 @@ ActiveRecord::Schema.define(version: 20180319095023) do
 
   create_table "plans", force: :cascade do |t|
     t.boolean "isCurrent"
+    t.decimal "priorityQuality"
+    t.decimal "performanceQuality"
+    t.decimal "similarityQuality"
+    t.decimal "globalQuality"
     t.integer "release_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

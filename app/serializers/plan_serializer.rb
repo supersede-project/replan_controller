@@ -1,5 +1,5 @@
 class PlanSerializer < ActiveModel::Serializer
-  attributes :id, :created_at, :release_id, :num_features, :num_jobs, :resources, :calendar, :resource_usage
+  attributes :id, :created_at, :release_id, :solutionQuality, :resources, :resource_usage
   
   def num_features
     object.release.features.count
@@ -9,24 +9,25 @@ class PlanSerializer < ActiveModel::Serializer
     #object.jobs.count
     0
   end
+
+  def solutionQuality
+    res = {priorityQuality: object.priorityQuality, performanceQuality: object.performanceQuality,
+           similarityQuality: object.similarityQuality, globalQuality: object.globalQuality}
+    res
+  end
   
   def resources
     object.release.resources.map { |r| {
         "id" => r.id,
         "name" => r.name,
-        "skills" => r.skills.map { |s| SkillSerializer.new(s)}
-        #"calendar" => r.dayslots.map { |d| DayslotSerializer.new(d)}
-    }}
-  end
-
-  def calendar
-    object.schedules.map { |s| {
-        "id" => s.id,
-        "begins" => get_time(object, s.week, s.dayOfWeek, s.beginHour),
-        "ends" => get_time(object, s.week, s.dayOfWeek, s.endHour),
-        "slotStatus" => if s.status == 0 then "Free" elsif s.status == 1 then "Used" else "Frozen" end,
-        "feature_id" => s.feature_id,
-        "resource_id" => s.resource_id
+        "skills" => r.skills.map { |s| SkillSerializer.new(s)},
+        "calendar" => object.schedules.where(resource_id: r.id).map {|s| {
+            "begins" => get_time(object.release.starts_at, s.week, s.dayOfWeek, s.beginHour),
+            "ends" => get_time(object.release.starts_at, s.week, s.dayOfWeek, s.endHour),
+            "slotStatus" => if s.status == 0 then "Free" elsif s.status == 1 then "Used" else "Frozen" end,
+            "feature_id" => s.feature_id
+          }
+        }
       }
     }
   end
@@ -45,8 +46,8 @@ class PlanSerializer < ActiveModel::Serializer
 
   private
 
-  def get_time(plan, week, dayOfWeek, hour)
-    date = plan.release.starts_at + (hour).hours + (dayOfWeek-1).days + (week-1).weeks
+  def get_time(starts_at, week, dayOfWeek, hour)
+    date = starts_at + (hour).hours + (dayOfWeek-1).days + (week-1).weeks
     return date
   end
 

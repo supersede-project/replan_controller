@@ -32,39 +32,29 @@ r2.skills << s3
 r3.skills << s1
 r3.skills << s3
 
-r1d1 = p.dayslots.create(week: 1, dayOfWeek: 1, beginHour: 8.0, endHour: 17.0)
-r1d2 = p.dayslots.create(week: 1, dayOfWeek: 2, beginHour: 8.0, endHour: 17.0)
-r1d3 = p.dayslots.create(week: 1, dayOfWeek: 3, beginHour: 8.0, endHour: 17.0)
-r1d4 = p.dayslots.create(week: 1, dayOfWeek: 4, beginHour: 8.0, endHour: 17.0)
-r1d5 = p.dayslots.create(week: 1, dayOfWeek: 5, beginHour: 8.0, endHour: 17.0)
-r2d1 = p.dayslots.create(week: 1, dayOfWeek: 1, beginHour: 8.0, endHour: 17.0)
-r2d2 = p.dayslots.create(week: 1, dayOfWeek: 2, beginHour: 8.0, endHour: 17.0)
-r2d3 = p.dayslots.create(week: 1, dayOfWeek: 3, beginHour: 8.0, endHour: 17.0)
-r2d4 = p.dayslots.create(week: 1, dayOfWeek: 4, beginHour: 8.0, endHour: 17.0)
-r2d5 = p.dayslots.create(week: 1, dayOfWeek: 5, beginHour: 8.0, endHour: 17.0)
-r3d1 = p.dayslots.create(week: 1, dayOfWeek: 1, beginHour: 8.0, endHour: 17.0)
-r3d2 = p.dayslots.create(week: 1, dayOfWeek: 2, beginHour: 8.0, endHour: 17.0)
-r3d3 = p.dayslots.create(week: 1, dayOfWeek: 3, beginHour: 8.0, endHour: 17.0)
-r3d4 = p.dayslots.create(week: 1, dayOfWeek: 4, beginHour: 8.0, endHour: 17.0)
-r3d5 = p.dayslots.create(week: 1, dayOfWeek: 5, beginHour: 8.0, endHour: 17.0)
+d1 = p.dayslots.create(week: 1, dayOfWeek: 1, beginHour: 8.0, endHour: 17.0)
+d2 = p.dayslots.create(week: 1, dayOfWeek: 2, beginHour: 8.0, endHour: 17.0)
+d3 = p.dayslots.create(week: 1, dayOfWeek: 3, beginHour: 8.0, endHour: 17.0)
+d4 = p.dayslots.create(week: 1, dayOfWeek: 4, beginHour: 8.0, endHour: 17.0)
+d5 = p.dayslots.create(week: 1, dayOfWeek: 5, beginHour: 8.0, endHour: 17.0)
 
-r1.dayslots << r1d1
-r1.dayslots << r1d2
-r1.dayslots << r1d3
-r1.dayslots << r1d4
-r1.dayslots << r1d5
+r1.dayslots << d1
+r1.dayslots << d2
+r1.dayslots << d3
+r1.dayslots << d4
+r1.dayslots << d5
 
-r2.dayslots << r2d1
-r2.dayslots << r2d2
-r2.dayslots << r2d3
-r2.dayslots << r2d4
-r2.dayslots << r2d5
+r2.dayslots << d1
+r2.dayslots << d2
+r2.dayslots << d3
+r2.dayslots << d4
+r2.dayslots << d5
 
-r3.dayslots << r3d1
-r3.dayslots << r3d2
-r3.dayslots << r3d3
-r3.dayslots << r3d4
-r3.dayslots << r3d5
+r3.dayslots << d1
+r3.dayslots << d2
+r3.dayslots << d3
+r3.dayslots << d4
+r3.dayslots << d5
 
 f1 = p.features.create(code: 111, name: "Fix auto upload", description: "Bla, bla, bla", \
                        deadline: Date.today + 10, priority: 5, effort: 10)

@@ -49,18 +49,41 @@ class ReleasesController < ApplicationController
     render json: {"message" => "Release deleted"}
   end
 
-  def get_release_plan
-    # Your code here
-    force_new = @release.plans.size == 0 ||
-                (!params[:force_new].nil? && (params[:force_new] == "true" ||
-                                              params[:force_new] == "yes"))
-    multiple_solutions = !params[:multiple_solutions].nil? && (params[:multiple_solutions] == "true" ||
-        params[:multiple_solutions] == "yes")
+  def get_release_plans
+    if @release.plans.size == 0 then render json: {"message" => "No plans generated for this release"} end
+    render json: @release.plans
+  end
 
-    puts "Calling to: #{request.headers["Host"]}"
-    @plan = Plan.get_plan(@release, force_new, multiple_solutions)
+  def get_release_plan_by_id
+    if @release.plans.size == 0 then render json: {"message" => "No plans generated for this release"} end
+    id = params[:planId]
+    render json: @release.plans.where(id: id).first()
+  end
+
+  def get_release_current_plan
+    if @release.plans.size == 0 then render json: {"message" => "No plans generated for this release"} end
+    render json: @release.plans.where(isCurrent: true).first()
+  end
+
+  def new_plan
+    multiple_solutions = !params[:multiple_solutions].nil? && (params[:multiple_solutions] == "true" ||
+           params[:multiple_solutions] == "yes")
+    @plan = Plan.get_plan(@release, multiple_solutions)
     render json: @plan
   end
+
+  #def get_release_plan
+    # Your code here
+   # force_new = @release.plans.size == 0 ||
+    #            (!params[:force_new].nil? && (params[:force_new] == "true" ||
+     #                                         params[:force_new] == "yes"))
+    #multiple_solutions = !params[:multiple_solutions].nil? && (params[:multiple_solutions] == "true" ||
+     #   params[:multiple_solutions] == "yes")
+
+    #puts "Calling to: #{request.headers["Host"]}"
+    #@plan = Plan.get_plan(@release, force_new, multiple_solutions)
+    #render json: @plan
+  #end
 
   def get_releases
     @releases = @project.releases

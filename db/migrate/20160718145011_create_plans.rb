@@ -6,6 +6,7 @@ class CreatePlans < ActiveRecord::Migration[5.0]
       t.decimal :performanceQuality
       t.decimal :similarityQuality
       t.decimal :globalQuality
+      t.integer :nbFeatures
       t.references :release, foreign_key: true
       t.timestamps
     end

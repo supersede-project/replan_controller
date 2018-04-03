@@ -26,7 +26,7 @@ r2 = p.resources.create(name: "Bob", description: "Bob Bonaplata", availability:
 r3 = p.resources.create(name: "Calvin", description: "Calvin California", availability: 90)
 
 r1.skills << s1
-r1.skills << s2
+r1.skills << s3
 r2.skills << s2
 r2.skills << s3
 r3.skills << s1

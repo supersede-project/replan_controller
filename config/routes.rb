@@ -24,13 +24,18 @@ Rails.application.routes.draw do
   #add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan-n/{planId}/replan', controller_name: 'plan', action_name: 'replan_n'
   #add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan-n', controller_name: 'releases', action_name: 'get_release_plan_n'
 
-  add_ui_route 'PUT', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'notify_completed_jobs'
-  add_ui_route 'DELETE', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'cancel_last_release_plan'
+  #add_ui_route 'PUT', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'notify_completed_jobs'
+  #add_ui_route 'DELETE', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'cancel_last_release_plan'
 
-  add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'get_release_plan'
+  #add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'get_release_plan'
+  #add_ui_route 'POST', '/projects/{projectId}/releases/{releaseId}/plan/{planId}/replan', controller_name: 'plan', action_name: 'replan'
+
+  add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'get_release_plans'
+  add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan/{planId}', controller_name: 'releases', action_name: 'get_release_plan_by_id'
+  add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/current-plan', controller_name: 'releases', action_name: 'get_release_current_plan'
+
+  add_ui_route 'POST', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'new_plan'
   add_ui_route 'POST', '/projects/{projectId}/releases/{releaseId}/plan/{planId}/replan', controller_name: 'plan', action_name: 'replan'
-
-
 
   add_ui_route 'POST', '/projects/{projectId}/dayslots', controller_name: 'dayslots', action_name: 'add_new_dayslot_to_project'
   add_ui_route 'GET', '/projects/{projectId}/dayslots', controller_name: 'dayslots', action_name: 'get_dayslots'

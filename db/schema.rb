@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20180322115225) do
     t.decimal "performanceQuality"
     t.decimal "similarityQuality"
     t.decimal "globalQuality"
+    t.integer "nbFeatures"
     t.integer "release_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

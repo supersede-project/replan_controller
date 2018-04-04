@@ -1,13 +1,5 @@
 class PlanSerializer < ActiveModel::Serializer
-  attributes :id, :created_at, :release_id, :num_features, :num_jobs, :solutionQuality, :resources, :resource_usage
-  
-  def num_features
-    object.release.features.count
-  end
-  
-  def num_jobs
-    object.release.features.count
-  end
+  attributes :id, :created_at, :release_id, :solutionQuality, :resources, :resource_usage
 
   def solutionQuality
     res = {priorityQuality: object.priorityQuality, performanceQuality: object.performanceQuality,

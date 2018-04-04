@@ -807,12 +807,13 @@ paths:
             $ref: '#/definitions/Error'
         404:
           description: Project|Release|Feauture not found
+  
   /projects/{projectId}/releases/{releaseId}/plan:
     get:
-      summary: Gets the current Release Plan
+      summary: Get release plans
       description: |
-        This operation calculates and then returns a new Release Plan for a given Release.
-      operationId: getReleasePlan
+        This operation retrieves a list of the generated plans for the given Release
+      operationId: getPlans
       parameters:
         - name: projectId
           in: path
@@ -821,98 +822,162 @@ paths:
           required: true
         - name: releaseId
           in: path
-          type: number
-          format: int64
-          description: ID of the realese
-          required: true
-        - name: force_new
-          in: query
-          type: boolean
-          description: If true a new plan is created
-          required: false
-      tags:
-        - Releases
-        - Plan
-      responses:
-        200:
-          description: Success
-          schema:
-            $ref: '#/definitions/Plan'
-        422:
-          description: Unprocessable Entity
-          schema:
-            $ref: '#/definitions/Error'
-        404:
-          description: Project or Release not found
-    delete:
-      summary: Cancels the Release Plan
-      description: |
-        This operation cancels the Release Plan of the given Release.
-      operationId: cancelLastReleasePlan
-      parameters:
-        - name: projectId
-          in: path
           type: string
-          description: ID of the project (e.g. "1" or "siemens")
-          required: true
-        - name: releaseId
-          in: path
-          type: number
-          format: int64
-          description: ID of the realese
+          description: ID of the release (e.g. "1")
           required: true
       tags:
-        - Releases
-        - Plan
+        - Plans
       responses:
         200:
-          description: Success
-        422:
-          description: Unprocessable Entity
-          schema:
-            $ref: '#/definitions/Error'
-        404:
-          description: Project or Release not found
-    put:
-      summary: Communicates completed jobs
-      description: |
-        This operation communicates plan's jobs that has been completed
-      operationId: notifyCompletedJobs
-      parameters:
-        - name: projectId
-          in: path
-          type: string
-          description: ID of the project (e.g. "1" or "siemens")
-          required: true
-        - name: releaseId
-          in: path
-          type: number
-          format: int64
-          description: ID of the realese
-          required: true
-        - name: body
-          in: body
-          description: Array of {job_id, compteted_at}
-          required: true
+          description: An array of plans
           schema:
             type: array
             items:
-              $ref: '#/definitions/CompletedJob'
+              $ref: '#/definitions/Plan'
+        404:
+          description: Release of project not found
+    post:
+      summary: Plan a release
+      description: |
+        This operation generates a set of candidate plan solutions
+      operationId: plan
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: releaseId
+          in: path
+          type: string
+          description: ID of the release (e.g. "1")
+          required: true
+        - name: multiple_solutions
+          in: query
+          type: boolean
+          description: true if the optimizer must generate multiple solutions; false if only best solution is required
+          required: false
       tags:
-        - Releases
-        - Plan
-        - New in v2.1
+        - Plans
       responses:
         200:
-          description: Success. Returns a (probably new) Release Plan
+          description: An array of plans
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Plan'
+        404:
+          description: Release of project not found
+          
+  /projects/{projectId}/releases/{releaseId}/plan/{planId}:
+    get:
+      summary: Get release plan by id
+      description: |
+        This operation retrieves a release plan given its id
+      operationId: getPlanById
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: releaseId
+          in: path
+          type: string
+          description: ID of the release (e.g. "1")
+          required: true
+        - name: planId
+          in: path
+          type: string
+          description: ID of the plan (e.g. "1")
+          required: true
+      tags:
+        - Plans
+      responses:
+        200:
+          description: A plan
           schema:
             $ref: '#/definitions/Plan'
-        422:
-          description: Unprocessable Entity
-          schema:
-            $ref: '#/definitions/Error'
         404:
-          description: Project or Release not found
+          description: Plan not found
+          
+  /projects/{projectId}/releases/{releaseId}/current-plan:
+    get:
+      summary: Get current plan
+      description: |
+        This operation retrieves the current plan of a given release
+      operationId: getCurrentPlan
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: releaseId
+          in: path
+          type: string
+          description: ID of the release (e.g. "1")
+          required: true
+        - name: planId
+          in: path
+          type: string
+          description: ID of the plan (e.g. "1")
+          required: true
+      tags:
+        - Plans
+      responses:
+        200:
+          description: The current plan
+          schema:
+            $ref: '#/definitions/Plan'
+        404:
+          description: Release not found
+          
+  /projects/{projectId}/releases/{releaseId}/plan/{planId}/replan:
+    post:
+      summary: Replan a given plan
+      description: |
+        This operation generates a new plan based on a given computed plan
+      operationId: replan
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: releaseId
+          in: path
+          type: string
+          description: ID of the release (e.g. "1")
+          required: true
+        - name: planId
+          in: path
+          type: string
+          description: ID of the plan (e.g. "1")
+          required: true
+        - name: multiple_solutions
+          in: query
+          type: boolean
+          description: true if the optimizer must generate multiple solutions; false if only best solution is required
+          required: false
+        - name: body
+          in: body
+          description: Replan time (week, day, hour)
+          required: true
+          schema:
+            $ref: '#/definitions/ReplanTime'
+      tags:
+        - Plans
+      responses:
+        200:
+          description: The current plan
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Plan'
+        404:
+          description: Plan not found
+  
   /projects/{projectId}/skills:
     get:
       summary: Get project skills
@@ -1234,6 +1299,237 @@ paths:
             $ref: '#/definitions/Error'
         404:
           description: Project or Resource not found
+          
+  /projects/{projectId}/dayslots:
+    post:
+      summary: Create a dayslot
+      description: |
+        This operation allows creating a dayslot
+      operationId: createDayslot
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: body
+          in: body
+          description: Dayslot params
+          required: true
+          schema:
+            $ref: '#/definitions/DaySlot'
+      tags:
+        - DaySlots
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/DaySlot'
+        422:
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Project not found
+    get:
+      summary: Get list of daySlots
+      description: |
+        Given a project get the list of all dayslots
+      operationId: getDaySlots
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+      tags:
+        - DaySlots
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DaySlot'
+        404:
+          description: Project not found
+  /projects/{projectId}/dayslots/{dayslotId}:
+    get:
+      summary: Get a daySlot
+      description: |
+        This operation retrieves a dayslot instance
+      operationId: getDaySlot
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: dayslotId
+          in: path
+          type: string
+          description: ID of the dayslot (e.g. "1")
+          required: true
+      tags:
+        - DaySlots
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/DaySlot'
+        404:
+          description: Project or dayslot not found
+    put:
+      summary: Update a dayslot
+      description: |
+        Updates the params of an existing dayslot
+      operationId: updateSlot
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: dayslotId
+          in: path
+          type: string
+          description: ID of the dayslot (e.g. "1")
+          required: true
+        - name: body
+          in: body
+          description: Dayslot params
+          required: true
+          schema:
+            $ref: '#/definitions/DaySlot'
+      tags:
+        - DaySlots
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DaySlot'
+        404:
+          description: Project not found
+    delete:
+      summary: Delete a dayslot
+      description: |
+        Deletes an existing dayslot
+      operationId: deleteDayslot
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: dayslotId
+          in: path
+          type: string
+          description: ID of the dayslot (e.g. "1")
+          required: true
+      tags:
+        - DaySlots
+      responses:
+        200:
+          description: Success
+        404:
+          description: Project not found
+          
+  /projects/{projectId}/resources/{resourceId}/dayslots:
+    get:
+      summary: Get dayslots of a given resource
+      description: |
+        This operation retrieves all dayslots of a given resource for a specific project
+      operationId: getDaySlotsFromResource
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: resourceId
+          in: path
+          type: string
+          description: ID of the resource (e.g. "1")
+          required: true
+      tags:
+        - DaySlots
+        - Resources
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DaySlot'
+        404:
+          description: Project or resource not found
+    post:
+      summary: Assign daySlot to resource
+      description: |
+        Assign a list of dayslots to a specific resource
+      operationId: assignDayslotToResource
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: resourceId
+          in: path
+          type: string
+          description: ID of the dayslot (e.g. "1")
+          required: true
+        - name: body
+          in: body
+          description: dayslotIds
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DaySlotId'
+      tags:
+        - DaySlots
+        - Resources
+      responses:
+        200:
+          description: Success
+        404:
+          description: Project not found
+    delete:
+      summary: Removes a list of dayslots of a resource
+      description: |
+        Deletes a list of dayslots of a resource
+      operationId: deleteDayslotFromResource
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: resourceId
+          in: path
+          type: string
+          description: ID of the resource (e.g. "1")
+          required: true
+        - name: dayslotId
+          in: query
+          description: IDs of the dayslots to remove
+          required: true
+          type: array
+          items:
+            type: number
+            format: int64
+      tags:
+        - DaySlots
+        - Resources
+      responses:
+        200:
+          description: Success
+        404:
+          description: Project not found
+  
 definitions:
   Skill:
     type: object
@@ -1511,11 +1807,35 @@ definitions:
         format: date
       release_id:
         type: integer
-      jobs:
+      solutionQuality:
+        type: object
+        properties:
+          priorityQuality:
+            type: number
+          performanceQuality:
+            type: number
+          similarityQuality:
+            type: number
+          globalQuality:
+            type: number
+      resources:
         type: array
-        description: array of jobs
+        description: array of resources
         items:
-          $ref: '#/definitions/Job'
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            skills:
+              type: array
+              items: 
+                $ref: '#/definitions/Skill'
+            calendar:
+              type: array
+              items:
+                $ref: '#/definitions/Calendar'
       resource_usage:
         type: array
         description: usage of each release resource
@@ -1530,17 +1850,6 @@ definitions:
               type: number
             total_used_hours:
               type: number
-  CompletedJob:
-    type: object
-    required:
-    - job_id
-    - completed_at
-    properties:
-      job_id:
-        type: integer
-      completed_at:
-        type: string
-        format: date-time
   Error:
     type: object
     properties:
@@ -1551,3 +1860,45 @@ definitions:
         type: string
       fields:
         type: string
+  ReplanTime:
+    type: object
+    properties:
+      week:
+        type: integer
+      dayOfWeek:
+        type: integer
+      beginHour:
+        type: integer
+  DaySlot:
+    type: object
+    properties:
+      id:
+        type: integer
+      week:
+        type: integer
+      dayOfWeek:
+        type: integer
+      beginHour:
+        type: number
+      endHour:
+        type: number
+  DaySlotId:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: Unique identifier representing a dayslot
+  Calendar:
+    type: object
+    properties:
+      begins:
+        type: string
+        format: date-time
+      ends: 
+        type: string
+        format: date-time
+      slotStatus:
+        type: string
+        enum: [Free, Frozen, Used]
+      featureId:
+        type: integer

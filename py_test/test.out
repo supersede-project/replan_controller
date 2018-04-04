@@ -1,0 +1,224 @@
+Creating 1 project
+(200, 'OK')
+{"id":103,"name":"Project-Neptune","description":"A new project to test","resources":[]}
+Created project with id 103
+
+Creating features
+(200, 'OK')
+{"id":500,"code":1,"name":"F002","jira_url":"fake_url","description":"Feature #001","effort":20.0,"deadline":"2018-05-04","priority":2,"required_skills":[],"depends_on":[],"release":"pending"}
+(200, 'OK')
+{"id":501,"code":2,"name":"F002","jira_url":"fake_url","description":"Feature #002","effort":30.0,"deadline":"2018-05-04","priority":1,"required_skills":[],"depends_on":[],"release":"pending"}
+(200, 'OK')
+{"id":502,"code":3,"name":"F003","jira_url":"fake_url","description":"Feature #003","effort":5.0,"deadline":"2018-05-04","priority":5,"required_skills":[],"depends_on":[],"release":"pending"}
+(200, 'OK')
+{"id":503,"code":4,"name":"F004","jira_url":"fake_url","description":"Feature #004","effort":10.0,"deadline":"2018-05-04","priority":1,"required_skills":[],"depends_on":[],"release":"pending"}
+(200, 'OK')
+{"id":504,"code":5,"name":"F005","jira_url":"fake_url","description":"Feature #005","effort":25.0,"deadline":"2018-05-04","priority":5,"required_skills":[],"depends_on":[],"release":"pending"}
+(200, 'OK')
+{"id":505,"code":6,"name":"F006","jira_url":"fake_url","description":"Feature #006","effort":20.0,"deadline":"2018-05-04","priority":3,"required_skills":[],"depends_on":[],"release":"pending"}
+(200, 'OK')
+{"id":506,"code":7,"name":"F007","jira_url":"fake_url","description":"Feature #007","effort":15.0,"deadline":"2018-05-04","priority":2,"required_skills":[],"depends_on":[],"release":"pending"}
+(200, 'OK')
+{"id":507,"code":8,"name":"F008","jira_url":"fake_url","description":"Feature #008","effort":40.0,"deadline":"2018-05-04","priority":1,"required_skills":[],"depends_on":[],"release":"pending"}
+(200, 'OK')
+{"id":508,"code":9,"name":"F009","jira_url":"fake_url","description":"Feature #009","effort":10.0,"deadline":"2018-05-04","priority":4,"required_skills":[],"depends_on":[],"release":"pending"}
+(200, 'OK')
+{"id":509,"code":10,"name":"F010","jira_url":"fake_url","description":"Feature #010","effort":35.0,"deadline":"2018-05-04","priority":5,"required_skills":[],"depends_on":[],"release":"pending"}
+Created features with ids: 500,501,502,503,504,505,506,507,508,509,
+
+
+Add dependencies to features
+Set feature 501 as a dependency of 500
+(200, 'OK')
+{"id":500,"code":1,"name":"F002","jira_url":"fake_url","description":"Feature #001","effort":20.0,"deadline":"2018-05-04","priority":2,"required_skills":[],"depends_on":[{"id":501,"code":2,"name":"F002","description":"Feature #002","effort":30.0,"deadline":"2018-05-04","priority":1,"release":"pending"}],"release":"pending"}
+Set feature 502 as a dependency of 501
+(200, 'OK')
+{"id":501,"code":2,"name":"F002","jira_url":"fake_url","description":"Feature #002","effort":30.0,"deadline":"2018-05-04","priority":1,"required_skills":[],"depends_on":[{"id":502,"code":3,"name":"F003","description":"Feature #003","effort":5.0,"deadline":"2018-05-04","priority":5,"release":"pending"}],"release":"pending"}
+Set feature 505 as a dependency of 504
+(200, 'OK')
+{"id":504,"code":5,"name":"F005","jira_url":"fake_url","description":"Feature #005","effort":25.0,"deadline":"2018-05-04","priority":5,"required_skills":[],"depends_on":[{"id":505,"code":6,"name":"F006","description":"Feature #006","effort":20.0,"deadline":"2018-05-04","priority":3,"release":"pending"}],"release":"pending"}
+
+
+Creating skills
+(200, 'OK')
+{"id":124,"name":"S001","description":"Skill #001"}
+(200, 'OK')
+{"id":125,"name":"S002","description":"Skill #002"}
+(200, 'OK')
+{"id":126,"name":"S003","description":"Skill #003"}
+Created skills with ids: 124,125,126,
+
+
+Creating resourcess
+(200, 'OK')
+{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[],"calendar":[]}
+(200, 'OK')
+{"id":113,"name":"E002","description":"Employee #002","availability":null,"skills":[],"calendar":[]}
+(200, 'OK')
+{"id":114,"name":"E003","description":"Employee #003","availability":null,"skills":[],"calendar":[]}
+Created resources with ids: 112,113,114,
+
+
+Creating dayslots
+(200, 'OK')
+{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"}
+(200, 'OK')
+{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"}
+(200, 'OK')
+{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"}
+(200, 'OK')
+{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"}
+(200, 'OK')
+{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"}
+(200, 'OK')
+{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"}
+(200, 'OK')
+{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"}
+(200, 'OK')
+{"id":316,"week":2,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"}
+(200, 'OK')
+{"id":317,"week":2,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"}
+(200, 'OK')
+{"id":318,"week":2,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"}
+Created dayslots with ids: 309,310,311,312,313,314,315,316,317,318,
+
+
+Assigning skills to resources
+(200, 'OK')
+{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"}],"calendar":[]}
+(200, 'OK')
+{"id":113,"name":"E002","description":"Employee #002","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"}],"calendar":[]}
+(200, 'OK')
+{"id":114,"name":"E003","description":"Employee #003","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"}],"calendar":[]}
+(200, 'OK')
+{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"}],"calendar":[]}
+(200, 'OK')
+{"id":113,"name":"E002","description":"Employee #002","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"}],"calendar":[]}
+(200, 'OK')
+{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"},{"id":126,"name":"S003","description":"Skill #003"}],"calendar":[]}
+
+
+Assigning skills to features
+(200, 'OK')
+{"id":500,"code":1,"name":"F002","jira_url":"fake_url","description":"Feature #001","effort":20.0,"deadline":"2018-05-04","priority":2,"required_skills":[{"id":124,"name":"S001","description":"Skill #001"}],"depends_on":[{"id":501,"code":2,"name":"F002","description":"Feature #002","effort":30.0,"deadline":"2018-05-04","priority":1,"release":"pending"}],"release":"pending"}
+(200, 'OK')
+{"id":501,"code":2,"name":"F002","jira_url":"fake_url","description":"Feature #002","effort":30.0,"deadline":"2018-05-04","priority":1,"required_skills":[{"id":125,"name":"S002","description":"Skill #002"}],"depends_on":[{"id":502,"code":3,"name":"F003","description":"Feature #003","effort":5.0,"deadline":"2018-05-04","priority":5,"release":"pending"}],"release":"pending"}
+(200, 'OK')
+{"id":502,"code":3,"name":"F003","jira_url":"fake_url","description":"Feature #003","effort":5.0,"deadline":"2018-05-04","priority":5,"required_skills":[{"id":126,"name":"S003","description":"Skill #003"}],"depends_on":[],"release":"pending"}
+(200, 'OK')
+{"id":503,"code":4,"name":"F004","jira_url":"fake_url","description":"Feature #004","effort":10.0,"deadline":"2018-05-04","priority":1,"required_skills":[{"id":124,"name":"S001","description":"Skill #001"}],"depends_on":[],"release":"pending"}
+(200, 'OK')
+{"id":504,"code":5,"name":"F005","jira_url":"fake_url","description":"Feature #005","effort":25.0,"deadline":"2018-05-04","priority":5,"required_skills":[{"id":125,"name":"S002","description":"Skill #002"}],"depends_on":[{"id":505,"code":6,"name":"F006","description":"Feature #006","effort":20.0,"deadline":"2018-05-04","priority":3,"release":"pending"}],"release":"pending"}
+(200, 'OK')
+{"id":505,"code":6,"name":"F006","jira_url":"fake_url","description":"Feature #006","effort":20.0,"deadline":"2018-05-04","priority":3,"required_skills":[{"id":126,"name":"S003","description":"Skill #003"}],"depends_on":[],"release":"pending"}
+(200, 'OK')
+{"id":506,"code":7,"name":"F007","jira_url":"fake_url","description":"Feature #007","effort":15.0,"deadline":"2018-05-04","priority":2,"required_skills":[{"id":124,"name":"S001","description":"Skill #001"}],"depends_on":[],"release":"pending"}
+(200, 'OK')
+{"id":507,"code":8,"name":"F008","jira_url":"fake_url","description":"Feature #008","effort":40.0,"deadline":"2018-05-04","priority":1,"required_skills":[{"id":125,"name":"S002","description":"Skill #002"}],"depends_on":[],"release":"pending"}
+(200, 'OK')
+{"id":508,"code":9,"name":"F009","jira_url":"fake_url","description":"Feature #009","effort":10.0,"deadline":"2018-05-04","priority":4,"required_skills":[{"id":126,"name":"S003","description":"Skill #003"}],"depends_on":[],"release":"pending"}
+(200, 'OK')
+{"id":509,"code":10,"name":"F010","jira_url":"fake_url","description":"Feature #010","effort":35.0,"deadline":"2018-05-04","priority":5,"required_skills":[{"id":124,"name":"S001","description":"Skill #001"}],"depends_on":[],"release":"pending"}
+
+
+Assign dayslots to resources
+(200, 'OK')
+{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"},{"id":126,"name":"S003","description":"Skill #003"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"},{"id":126,"name":"S003","description":"Skill #003"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"},{"id":126,"name":"S003","description":"Skill #003"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"},{"id":126,"name":"S003","description":"Skill #003"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"},{"id":126,"name":"S003","description":"Skill #003"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"},{"id":126,"name":"S003","description":"Skill #003"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"},{"id":126,"name":"S003","description":"Skill #003"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"},{"id":126,"name":"S003","description":"Skill #003"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":316,"week":2,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"},{"id":126,"name":"S003","description":"Skill #003"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":316,"week":2,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":317,"week":2,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"},{"id":126,"name":"S003","description":"Skill #003"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":316,"week":2,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":317,"week":2,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":318,"week":2,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":113,"name":"E002","description":"Employee #002","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":113,"name":"E002","description":"Employee #002","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":113,"name":"E002","description":"Employee #002","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":113,"name":"E002","description":"Employee #002","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":113,"name":"E002","description":"Employee #002","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":113,"name":"E002","description":"Employee #002","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":113,"name":"E002","description":"Employee #002","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":113,"name":"E002","description":"Employee #002","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":316,"week":2,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":113,"name":"E002","description":"Employee #002","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":316,"week":2,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":317,"week":2,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":113,"name":"E002","description":"Employee #002","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":316,"week":2,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":317,"week":2,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":318,"week":2,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":114,"name":"E003","description":"Employee #003","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":114,"name":"E003","description":"Employee #003","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":114,"name":"E003","description":"Employee #003","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":114,"name":"E003","description":"Employee #003","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":114,"name":"E003","description":"Employee #003","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":114,"name":"E003","description":"Employee #003","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":114,"name":"E003","description":"Employee #003","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":114,"name":"E003","description":"Employee #003","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":316,"week":2,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":114,"name":"E003","description":"Employee #003","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":316,"week":2,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":317,"week":2,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"}]}
+(200, 'OK')
+{"id":114,"name":"E003","description":"Employee #003","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":316,"week":2,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":317,"week":2,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":318,"week":2,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"}]}
+
+
+Created a project with 10 features, 3 resources
+Creating release
+(200, 'OK')
+{"id":28,"name":"string","description":"string","starts_at":"2018-04-04T11:33:09.586Z","deadline":"2018-05-04T11:33:09.586Z","resources":[]}
+Created release with id 28
+
+Assign resources to release
+(200, 'OK')
+{"id":28,"name":"string","description":"string","starts_at":"2018-04-04T11:33:09.586Z","deadline":"2018-05-04T11:33:09.586Z","resources":[{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"},{"id":126,"name":"S003","description":"Skill #003"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":316,"week":2,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":317,"week":2,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":318,"week":2,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"}]}]}
+(200, 'OK')
+{"id":28,"name":"string","description":"string","starts_at":"2018-04-04T11:33:09.586Z","deadline":"2018-05-04T11:33:09.586Z","resources":[{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"},{"id":126,"name":"S003","description":"Skill #003"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":316,"week":2,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":317,"week":2,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":318,"week":2,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"}]},{"id":113,"name":"E002","description":"Employee #002","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":316,"week":2,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":317,"week":2,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":318,"week":2,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"}]}]}
+(200, 'OK')
+{"id":28,"name":"string","description":"string","starts_at":"2018-04-04T11:33:09.586Z","deadline":"2018-05-04T11:33:09.586Z","resources":[{"id":112,"name":"E001","description":"Employee #001","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"},{"id":126,"name":"S003","description":"Skill #003"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":316,"week":2,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":317,"week":2,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":318,"week":2,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"}]},{"id":113,"name":"E002","description":"Employee #002","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"},{"id":125,"name":"S002","description":"Skill #002"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":316,"week":2,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":317,"week":2,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":318,"week":2,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"}]},{"id":114,"name":"E003","description":"Employee #003","availability":null,"skills":[{"id":124,"name":"S001","description":"Skill #001"}],"calendar":[{"id":309,"week":1,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":310,"week":1,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":311,"week":1,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":312,"week":1,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":313,"week":1,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"},{"id":314,"week":2,"dayOfWeek":1,"beginHour":"9.0","endHour":"18.0"},{"id":315,"week":2,"dayOfWeek":2,"beginHour":"9.0","endHour":"18.0"},{"id":316,"week":2,"dayOfWeek":3,"beginHour":"9.0","endHour":"18.0"},{"id":317,"week":2,"dayOfWeek":4,"beginHour":"9.0","endHour":"18.0"},{"id":318,"week":2,"dayOfWeek":5,"beginHour":"9.0","endHour":"18.0"}]}]}
+
+
+Assign features to release
+(200, 'OK')
+{"message":"Done"}
+(200, 'OK')
+{"message":"Done"}
+(200, 'OK')
+{"message":"Done"}
+(200, 'OK')
+{"message":"Done"}
+(200, 'OK')
+{"message":"Done"}
+(200, 'OK')
+{"message":"Done"}
+(200, 'OK')
+{"message":"Done"}
+(200, 'OK')
+{"message":"Done"}
+(200, 'OK')
+{"message":"Done"}
+(200, 'OK')
+{"message":"Done"}
+
+

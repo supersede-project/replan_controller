@@ -1,0 +1,60 @@
+[{
+  "week": 1,
+  "dayOfWeek": 1,
+  "beginHour": 9.0,
+  "endHour": 18.0
+},
+{
+  "week": 1,
+  "dayOfWeek": 2,
+  "beginHour": 9.0,
+  "endHour": 18.0
+},
+{
+  "week": 1,
+  "dayOfWeek": 3,
+  "beginHour": 9.0,
+  "endHour": 18.0
+},
+{
+  "week": 1,
+  "dayOfWeek": 4,
+  "beginHour": 9.0,
+  "endHour": 18.0
+},
+{
+  "week": 1,
+  "dayOfWeek": 5,
+  "beginHour": 9.0,
+  "endHour": 18.0
+},
+{
+  "week": 2,
+  "dayOfWeek": 1,
+  "beginHour": 9.0,
+  "endHour": 18.0
+},
+{
+  "week": 2,
+  "dayOfWeek": 2,
+  "beginHour": 9.0,
+  "endHour": 18.0
+},
+{
+  "week": 2,
+  "dayOfWeek": 3,
+  "beginHour": 9.0,
+  "endHour": 18.0
+},
+{
+  "week": 2,
+  "dayOfWeek": 4,
+  "beginHour": 9.0,
+  "endHour": 18.0
+},
+{
+  "week": 2,
+  "dayOfWeek": 5,
+  "beginHour": 9.0,
+  "endHour": 18.0
+}]

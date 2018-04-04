@@ -15,7 +15,7 @@ class Feature < ApplicationRecord
   validates :project_id, presence: true
   
   def effort_hours
-    effort * project.hours_per_effort_unit
+    effort
   end
   
   def current_job

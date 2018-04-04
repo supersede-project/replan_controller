@@ -1,5 +1,5 @@
 class ProjectSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :effort_unit, :hours_per_effort_unit, :hours_per_week_and_full_time_resource, :resources
+  attributes :id, :name, :description, :resources
   
   def resources
     object

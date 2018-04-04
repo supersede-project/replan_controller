@@ -50,19 +50,28 @@ class ReleasesController < ApplicationController
   end
 
   def get_release_plans
-    if @release.plans.size == 0 then render json: {"message" => "No plans generated for this release"} end
-    render json: @release.plans
+    if @release.plans.size == 0
+      render json: {"message" => "No plans generated for this release"}
+    else
+      render json: @release.plans
+    end
   end
 
   def get_release_plan_by_id
-    if @release.plans.size == 0 then render json: {"message" => "No plans generated for this release"} end
-    id = params[:planId]
-    render json: @release.plans.where(id: id).first()
+    if @release.plans.size == 0
+      render json: {"message" => "No plans generated for this release"}
+    else
+      id = params[:planId]
+      render json: @release.plans.where(id: id).first()
+    end
   end
 
   def get_release_current_plan
-    if @release.plans.size == 0 then render json: {"message" => "No plans generated for this release"} end
-    render json: @release.plans.where(isCurrent: true).first()
+    if @release.plans.size == 0
+      render json: {"message" => "No plans generated for this release"}
+    else
+      render json: @release.plans.where(isCurrent: true).first()
+    end
   end
 
   def new_plan
@@ -110,7 +119,7 @@ class ReleasesController < ApplicationController
             @release.resources << resource
           end
       end
-    @release.deprecate_plan
+    #@release.deprecate_plan
     render json: @release
   end
 
@@ -121,7 +130,7 @@ class ReleasesController < ApplicationController
             @release.resources.delete(resource)
           end
       end
-    @release.deprecate_plan
+    #@release.deprecate_plan
     render json: @release
   end
   
@@ -138,7 +147,7 @@ class ReleasesController < ApplicationController
             @release.features << feature
           end
       end
-    @release.deprecate_plan
+    #@release.deprecate_plan
     render json: {"message" => "Done"}
   end
 
@@ -149,7 +158,7 @@ class ReleasesController < ApplicationController
             @release.features.delete(feature)
           end
       end
-    @release.deprecate_plan
+    #@release.deprecate_plan
     render json: {"message" => "Done"}
   end
   

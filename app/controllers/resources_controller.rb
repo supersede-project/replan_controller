@@ -79,6 +79,7 @@ class ResourcesController < ApplicationController
           @resource.dayslots << dayslot
         end
     end
+    render json: @resource
   end
 
   def delete_dayslots_from_resource

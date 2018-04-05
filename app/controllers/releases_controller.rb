@@ -51,7 +51,7 @@ class ReleasesController < ApplicationController
 
   def get_release_plans
     if @release.plans.size == 0
-      render json: {"message" => "No plans generated for this release"}
+      raise ActionController::RoutingError.new('Not Found')
     else
       render json: @release.plans
     end
@@ -59,7 +59,7 @@ class ReleasesController < ApplicationController
 
   def get_release_plan_by_id
     if @release.plans.size == 0
-      render json: {"message" => "No plans generated for this release"}
+      raise ActionController::RoutingError.new('Not Found')
     else
       id = params[:planId]
       render json: @release.plans.where(id: id).first()
@@ -68,7 +68,7 @@ class ReleasesController < ApplicationController
 
   def get_release_current_plan
     if @release.plans.size == 0
-      render json: {"message" => "No plans generated for this release"}
+      raise ActionController::RoutingError.new('Not Found')
     else
       render json: @release.plans.where(isCurrent: true).first()
     end

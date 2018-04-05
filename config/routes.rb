@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'get_release_plans'
   add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/plan/{planId}', controller_name: 'releases', action_name: 'get_release_plan_by_id'
   add_ui_route 'GET', '/projects/{projectId}/releases/{releaseId}/current-plan', controller_name: 'releases', action_name: 'get_release_current_plan'
+  add_ui_route 'POST', '/projects/{projectId}/releases/{releaseId}/plan/{planId}/set-current', controller_name: 'plan', action_name: 'set_current'
 
   add_ui_route 'POST', '/projects/{projectId}/releases/{releaseId}/plan', controller_name: 'releases', action_name: 'new_plan'
   add_ui_route 'POST', '/projects/{projectId}/releases/{releaseId}/plan/{planId}/replan', controller_name: 'plan', action_name: 'replan'

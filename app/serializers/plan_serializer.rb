@@ -1,5 +1,5 @@
 class PlanSerializer < ActiveModel::Serializer
-  attributes :id, :created_at, :release_id, :solutionQuality, :resources, :resource_usage
+  attributes :id, :created_at, :release_id, :isCurrent, :solutionQuality, :resources, :resource_usage
 
   def solutionQuality
     res = {priorityQuality: object.priorityQuality, performanceQuality: object.performanceQuality,

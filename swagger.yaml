@@ -1807,6 +1807,8 @@ definitions:
         format: date
       release_id:
         type: integer
+      isCurrent:
+        type: boolean
       solutionQuality:
         type: object
         properties:

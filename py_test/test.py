@@ -3,7 +3,7 @@ import sys
 import json
 
 #CREATE PROJECT
-print("Creating 1 project")
+print("Creating project")
 filepath = 'new_project.json'
 with open(filepath) as fh:
     mydata = fh.read()
@@ -138,12 +138,12 @@ for x in range(0,len(resources)-1):
 					headers={'content-type':'application/json'})
     print(response.status_code, response.reason)
     print(response.text)
-for x in range(0,len(resources)-2):
-    response = requests.post('http://localhost:3000/replan/projects/' + project_id + '/resources/' + str(resources[x]["id"]) + '/skills',
-					data='[{"skill_id":' + str(skills[2]["id"]) + '}]',
-					headers={'content-type':'application/json'})
-    print(response.status_code, response.reason)
-    print(response.text)
+#for x in range(0,len(resources)-2):
+#    response = requests.post('http://localhost:3000/replan/projects/' + project_id + '/resources/' + str(resources[x]["id"]) + '/skills',
+#					data='[{"skill_id":' + str(skills[2]["id"]) + '}]',
+#					headers={'content-type':'application/json'})
+ #   print(response.status_code, response.reason)
+  #  print(response.text)
 
 print("\n")
 
@@ -167,9 +167,6 @@ for x in range(0,len(resources)):
         print(response.status_code, response.reason)
         print(response.text)
 print("\n")
-
-
-print("Created a project with " + str(len(features)) + " features, " + str(len(resources)) + " resources")
 
 #CREATE PROJECT
 print("Creating release")
@@ -206,3 +203,10 @@ for x in range(0,len(features)):
     print(response.status_code, response.reason)
     print(response.text)
 print("\n")
+print("Created a project " + str(project_id) + " and a release " + str(release_id) + " with " + str(len(features)) + " features, " + str(len(resources)) + " resources (ids: " + str(resources[0]["id"]) + ", " + str(resources[1]["id"]) + ", " + str(resources[2]["id"]) + "), "
++ str(len(skills)) + " skills (ids: " + str(skills[0]["id"]) + ", " + str(skills[1]["id"]) + ", " + str(skills[2]["id"]) + ")")
+print("\n")
+print("project_id = '" + str(project_id) + "'")
+print("skill_id = '" + str(skills[2]["id"]) + "'")
+print("resources = [" + str(resources[0]["id"]) + "," + str(resources[1]["id"]) + "," + str(resources[2]["id"]) +"]")
+

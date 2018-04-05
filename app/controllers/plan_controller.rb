@@ -16,6 +16,15 @@ class PlanController < ApplicationController
     render json: release.plans
   end
 
+  def set_current
+    oldCurrentPlan = @plan.release.plans.where(isCurrent: true).first()
+    oldCurrentPlan.isCurrent = false
+    oldCurrentPlan.save
+    @plan.isCurrent = true
+    @plan.save
+    render json: @plan
+  end
+
   private
 
   def set_plan

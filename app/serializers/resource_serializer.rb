@@ -1,5 +1,5 @@
 class ResourceSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :availability, :skills, :calendar
+  attributes :id, :name, :description, :skills, :calendar
   
   def skills
     object

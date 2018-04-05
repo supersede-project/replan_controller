@@ -933,6 +933,36 @@ paths:
         404:
           description: Release not found
           
+  /projects/{projectId}/releases/{releaseId}/plan/{planId}/set-current:
+    post:
+      summary: Set plan as current
+      description: |
+        This operation marks the given plan as the current one for the release, and unmarks the old current plan
+      operationId: setCurrentPlan
+      parameters:
+        - name: projectId
+          in: path
+          type: string
+          description: ID of the project (e.g. "1" or "siemens")
+          required: true
+        - name: releaseId
+          in: path
+          type: string
+          description: ID of the release (e.g. "1")
+          required: true
+        - name: planId
+          in: path
+          type: string
+          description: ID of the plan (e.g. "1")
+          required: true
+      tags:
+        - Plans
+      responses:
+        200:
+          description: The plan marked as current
+          schema:
+            $ref: '#/definitions/Plan'
+
   /projects/{projectId}/releases/{releaseId}/plan/{planId}/replan:
     post:
       summary: Replan a given plan

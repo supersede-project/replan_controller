@@ -40,13 +40,20 @@ class Plan < ApplicationRecord
     plan = Plan.new(release: release)
     plan.save
 
+    #Rails.logger.info "::plan " + Time.now.strftime("%d/%m/%Y %H:%M:%S")
+    values = []
     resources.each do |r|
       r["calendar"].each do |d|
-        s = Schedule.new(week: d["week"], dayOfWeek: d["dayOfWeek"], beginHour: d["beginHour"], endHour: d["endHour"],
-                     status: if d["status"] == "Free" then 0 elsif d["status"] == "Used" then 1 else 2 end, feature_id: d["featureId"], resource_id: r["name"])
-        plan.schedules << s
+        if d["status"] == "Free" then status = "0" elsif d["status"] == "Used" then status = "1" else status = "2" end
+        if d["featureId"] == nil then feature_id = "null" else feature_id = d["featureId"] end
+        s = "(" + d['week'].to_s + "," + d['dayOfWeek'].to_s + "," + d['beginHour'].to_s + "," + d['endHour'].to_s + "," + status + "," + r['name'].to_s + "," + feature_id + ", " + plan.id.to_s + ")"
+        values.append(s)
       end
     end
+    values = values.join(",")
+    ActiveRecord::Base.connection.execute("INSERT INTO schedules (week, dayOfWeek, beginHour, endHour, status, resource_id," +
+                                              "feature_id, plan_id) VALUES #{values}")
+    #Rails.logger.info "::plan " + Time.now.strftime("%d/%m/%Y %H:%M:%S")
 
     return plan
 

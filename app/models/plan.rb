@@ -51,8 +51,10 @@ class Plan < ApplicationRecord
       end
     end
     values = values.join(",")
-    ActiveRecord::Base.connection.execute("INSERT INTO schedules (week, dayOfWeek, beginHour, endHour, status, resource_id," +
-                                              "feature_id, plan_id) VALUES #{values}")
+    insert_statement = "INSERT INTO schedules (week, dayOfWeek, beginHour, endHour, status, resource_id," +
+                                              "feature_id, plan_id) VALUES #{values}";
+    Rails.logger.info "::insert statatement into schedules: " + insert_statement
+    ActiveRecord::Base.connection.execute(insert_statement)
     #Rails.logger.info "::plan " + Time.now.strftime("%d/%m/%Y %H:%M:%S")
 
     return plan

@@ -51,7 +51,7 @@ class Plan < ApplicationRecord
       end
     end
     values = values.join(",")
-    insert_statement = "INSERT INTO schedules (week, 'dayOfWeek', beginHour, endHour, status, resource_id," +
+    insert_statement = "INSERT INTO schedules (week, \"dayOfWeek\", beginHour, endHour, status, resource_id," +
                                               "feature_id, plan_id) VALUES #{values}";
     Rails.logger.info "::insert statatement into schedules: " + insert_statement
     ActiveRecord::Base.connection.execute(insert_statement)

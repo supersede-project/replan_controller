@@ -12,6 +12,8 @@ class ApplicationController < ActionController::API
             id = 2
           when "atos"
             id = 3
+          when "review"
+            id = 4
         end
         @project = Project.find(id)
       end

@@ -5,6 +5,14 @@ class FeatureSerializer < ActiveModel::Serializer
     object.effort.to_f
   end
   
+  def description
+    (object.description.nil? or object.description.valid_encoding?) ? object.description : object.description.scrub
+  end
+  
+  def name
+    (object.name.nil? or object.name.valid_encoding?) ? object.name : object.name.scrub
+  end
+  
   def required_skills
     object
       .required_skills

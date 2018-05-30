@@ -62,6 +62,11 @@ class Wp3ApiController < ApplicationController
         jf[:jira_url] = p[:value] if p[:key] == 'jira_url'
       end
       
+      # Some sanitizing
+      
+      jf[:description] = jf[:description].scrub unless jf[:description].nil? or jf[:description].valid_encoding?
+      jf[:name] = jf[:name].scrub unless jf[:name].valid_encoding?
+      
       jf.permit(:code, :name, :effort, :priority, :description, :deadline, :jira_url)
     end
 end
